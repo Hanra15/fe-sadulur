@@ -8,10 +8,6 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="relative text-white overflow-hidden" style={{ background: 'linear-gradient(135deg, #2C4B1A 0%, #3A6928 50%, #5C8A36 100%)' }}>
         <div className="absolute inset-0 bg-black/20" />
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-30"
-          style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}
-        />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-36 text-center">
           <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-4">
             Liburan Seru di{' '}

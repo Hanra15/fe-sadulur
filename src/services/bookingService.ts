@@ -1,7 +1,7 @@
 import apiClient from '@/lib/apiClient'
 import { ApiResponse, Booking } from '@/types'
 
-export type BookingStatus = 'pending' | 'confirmed' | 'cancelled' | 'completed'
+export type BookingStatus = 'pending' | 'confirmed' | 'cancelled' | 'paid'
 
 export const bookingService = {
   // POST /api/bookings (JWT optional - visitor)

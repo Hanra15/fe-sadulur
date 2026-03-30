@@ -35,6 +35,8 @@ export interface Villa {
   available: boolean
   rating?: number
   reviews_count?: number
+  lat?: number
+  lng?: number
   latitude?: number
   longitude?: number
   owner_id?: string | number
@@ -45,21 +47,37 @@ export interface Villa {
 
 export interface Booking {
   id: string | number
-  villa_id: string | number
+  bookingCode?: string
+  villa_id?: string | number
   villa?: Villa
   user_id?: string | number
   user?: User
-  guest_name: string
-  guest_email: string
-  guest_phone: string
-  check_in: string
-  check_out: string
-  guests: number
-  total_price: number
-  status: 'pending' | 'confirmed' | 'cancelled' | 'completed'
-  payment_status: 'unpaid' | 'paid' | 'refunded'
-  notes?: string
-  created_at?: string
+  customerName: string
+  customerPhone: string
+  customerEmail?: string
+  villaName?: string
+  villaLocation?: string
+  villaPrice?: number
+  checkInDate?: string
+  checkOutDate?: string
+  bookingDate?: string
+  numberOfGuests?: number
+  status: 'pending' | 'confirmed' | 'cancelled' | 'paid'
+  createdAt?: string
+  updatedAt?: string
+}
+
+export interface PaginatedResponse<T> {
+  status: string
+  data: T[]
+  total?: number
+  pagination?: {
+    total: number
+    page: number
+    limit: number
+    totalPages: number
+  }
+  message?: string
 }
 
 export interface Review {

@@ -1,5 +1,5 @@
 import apiClient from '@/lib/apiClient'
-import { ApiResponse, Villa, VillaFilters } from '@/types'
+import { ApiResponse, Villa, VillaFilters, PaginatedResponse } from '@/types'
 
 export interface CalendarEntry {
   date: string
@@ -7,8 +7,26 @@ export interface CalendarEntry {
   note?: string
 }
 
+export interface VillaFormPayload {
+  name: string
+  location: string
+  description: string
+  price: number
+  priceWeekend?: number
+  capacity: number
+  bedrooms?: number
+  bathrooms?: number
+  whatsapp?: string
+  facilities?: string[]
+  available?: boolean
+  lat?: number
+  lng?: number
+  imageUrls?: string[]
+  owner_id?: string | number
+}
+
 export const villaService = {
-  getAll: async (filters?: VillaFilters): Promise<ApiResponse<Villa[]>> => {
+  getAll: async (filters?: VillaFilters & { page?: number; limit?: number }): Promise<PaginatedResponse<Villa>> => {
     const { data } = await apiClient.get('/villas', { params: filters })
     return data
   },
@@ -18,13 +36,35 @@ export const villaService = {
     return data
   },
 
-  create: async (payload: Partial<Villa>): Promise<ApiResponse<Villa>> => {
-    const { data } = await apiClient.post('/villas', payload)
+  create: async (payload: VillaFormPayload): Promise<ApiResponse<Villa>> => {
+    const formData = new FormData()
+    Object.entries(payload).forEach(([key, val]) => {
+      if (val === undefined || val === null) return
+      if (key === 'facilities' || key === 'imageUrls') {
+        formData.append(key, JSON.stringify(val))
+      } else {
+        formData.append(key, String(val))
+      }
+    })
+    const { data } = await apiClient.post('/villas', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    })
     return data
   },
 
-  update: async (id: string | number, payload: Partial<Villa>): Promise<ApiResponse<Villa>> => {
-    const { data } = await apiClient.put(`/villas/${id}`, payload)
+  update: async (id: string | number, payload: Partial<VillaFormPayload>): Promise<ApiResponse<Villa>> => {
+    const formData = new FormData()
+    Object.entries(payload).forEach(([key, val]) => {
+      if (val === undefined || val === null) return
+      if (key === 'facilities' || key === 'imageUrls') {
+        formData.append(key, JSON.stringify(val))
+      } else {
+        formData.append(key, String(val))
+      }
+    })
+    const { data } = await apiClient.put(`/villas/${id}`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    })
     return data
   },
 
@@ -33,13 +73,11 @@ export const villaService = {
     return data
   },
 
-  // GET /api/villas/:id/calendar
   getCalendar: async (id: string | number): Promise<ApiResponse<CalendarEntry[]>> => {
     const { data } = await apiClient.get(`/villas/${id}/calendar`)
     return data
   },
 
-  // POST /api/villas/:id/calendar
   updateCalendar: async (id: string | number, payload: CalendarEntry[]): Promise<ApiResponse<CalendarEntry[]>> => {
     const { data } = await apiClient.post(`/villas/${id}/calendar`, payload)
     return data
