@@ -6,7 +6,7 @@ export default function HomePage() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-emerald-700 via-emerald-600 to-teal-500 text-white overflow-hidden">
+      <section className="relative text-white overflow-hidden" style={{ background: 'linear-gradient(135deg, #2C4B1A 0%, #3A6928 50%, #5C8A36 100%)' }}>
         <div className="absolute inset-0 bg-black/20" />
         <div
           className="absolute inset-0 bg-cover bg-center opacity-30"
@@ -17,7 +17,7 @@ export default function HomePage() {
             Liburan Seru di{' '}
             <span className="text-amber-300">Puncak Bogor</span>
           </h1>
-          <p className="text-lg md:text-xl text-emerald-100 max-w-2xl mx-auto mb-10">
+          <p className="text-lg md:text-xl text-slate-200 max-w-2xl mx-auto mb-10">
             Temukan villa & penginapan terbaik dekat Taman Safari. Nikmati udara segar, pemandangan hijau, dan pengalaman tak terlupakan bersama keluarga.
           </p>
           <div className="flex justify-center">
@@ -34,10 +34,10 @@ export default function HomePage() {
         <p className="text-slate-500 text-center mb-10">Pengalaman menginap yang aman, nyaman, dan berkesan</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
           {[
-            { icon: <Shield className="text-emerald-500" size={32} />, title: 'Terpercaya', desc: 'Semua villa telah terverifikasi oleh tim Villa Sadulur.' },
-            { icon: <MapPin className="text-emerald-500" size={32} />, title: 'Lokasi Strategis', desc: 'Dekat Taman Safari, wisata alam, dan kuliner Puncak Bogor.' },
-            { icon: <Star className="text-emerald-500" size={32} />, title: 'Kualitas Terbaik', desc: 'Fasilitas lengkap dengan harga terjangkau untuk semua kalangan.' },
-            { icon: <Clock className="text-emerald-500" size={32} />, title: 'Booking Mudah', desc: 'Proses pemesanan cepat, konfirmasi instan, 24 jam.' },
+            { icon: <Shield size={32} style={{ color: '#5C8A36' }} />, title: 'Terpercaya', desc: 'Semua villa telah terverifikasi oleh tim Villa Sadulur.' },
+            { icon: <MapPin size={32} style={{ color: '#5C8A36' }} />, title: 'Lokasi Strategis', desc: 'Dekat Taman Safari, wisata alam, dan kuliner Puncak Bogor.' },
+            { icon: <Star size={32} style={{ color: '#5C8A36' }} />, title: 'Kualitas Terbaik', desc: 'Fasilitas lengkap dengan harga terjangkau untuk semua kalangan.' },
+            { icon: <Clock size={32} style={{ color: '#5C8A36' }} />, title: 'Booking Mudah', desc: 'Proses pemesanan cepat, konfirmasi instan, 24 jam.' },
           ].map((item, i) => (
             <div key={i} className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 text-center hover:shadow-md transition">
               <div className="flex justify-center mb-3">{item.icon}</div>
@@ -56,13 +56,13 @@ export default function HomePage() {
               <h2 className="text-2xl md:text-3xl font-bold text-slate-800">Villa Pilihan</h2>
               <p className="text-slate-500 mt-1">Villa terpopuler di kawasan Puncak Bogor</p>
             </div>
-            <a href="/villas" className="text-emerald-600 hover:underline text-sm font-medium hidden sm:block">
+            <a href="/villas" className="text-sm font-medium hidden sm:block hover:underline" style={{ color: '#5C8A36' }}>
               Lihat semua →
             </a>
           </div>
           <VillaListSection limit={6} />
           <div className="text-center mt-8 sm:hidden">
-            <a href="/villas" className="inline-block border border-emerald-600 text-emerald-600 hover:bg-emerald-50 px-6 py-2 rounded-full text-sm font-medium transition">
+            <a href="/villas" className="inline-block px-6 py-2 rounded-full text-sm font-medium transition border" style={{ borderColor: '#5C8A36', color: '#5C8A36' }}>
               Lihat Semua Villa
             </a>
           </div>
@@ -93,11 +93,11 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-r from-emerald-600 to-teal-500 text-white py-16">
+      <section className="text-white py-16" style={{ background: 'linear-gradient(135deg, #3A6928 0%, #5C8A36 100%)' }}>
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-3">Siap Liburan ke Puncak Bogor?</h2>
-          <p className="text-emerald-100 mb-8">Booking villa impianmu sekarang dan nikmati momen tak terlupakan bersama orang-orang tersayang.</p>
-          <a href="/villas" className="bg-white text-emerald-700 hover:bg-emerald-50 font-bold px-8 py-3 rounded-full transition inline-block">
+          <p className="text-slate-200 mb-8">Booking villa impianmu sekarang dan nikmati momen tak terlupakan bersama orang-orang tersayang.</p>
+          <a href="/villas" className="bg-white font-bold px-8 py-3 rounded-full transition inline-block" style={{ color: '#3A6928' }}>
             Cari Villa Sekarang
           </a>
         </div>

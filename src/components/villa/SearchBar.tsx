@@ -28,7 +28,7 @@ export default function SearchBar() {
     >
       {/* Lokasi */}
       <div className="flex items-center gap-2 flex-1 min-w-[160px] px-3 py-2 rounded-xl hover:bg-slate-50 transition">
-        <MapPin size={17} className="text-emerald-500 shrink-0" />
+        <MapPin size={17} className="shrink-0" style={{ color: '#5C8A36' }} />
         <div className="flex flex-col w-full">
           <label className="text-xs text-slate-500 font-medium">Lokasi</label>
           <input
@@ -45,7 +45,7 @@ export default function SearchBar() {
 
       {/* Check-in */}
       <div className="flex items-center gap-2 flex-1 min-w-[130px] px-3 py-2 rounded-xl hover:bg-slate-50 transition">
-        <Calendar size={17} className="text-emerald-500 shrink-0" />
+        <Calendar size={17} className="shrink-0" style={{ color: '#5C8A36' }} />
         <div className="flex flex-col w-full">
           <label className="text-xs text-slate-500 font-medium">Check-in</label>
           <input
@@ -61,7 +61,7 @@ export default function SearchBar() {
 
       {/* Check-out */}
       <div className="flex items-center gap-2 flex-1 min-w-[130px] px-3 py-2 rounded-xl hover:bg-slate-50 transition">
-        <Calendar size={17} className="text-emerald-500 shrink-0" />
+        <Calendar size={17} className="shrink-0" style={{ color: '#5C8A36' }} />
         <div className="flex flex-col w-full">
           <label className="text-xs text-slate-500 font-medium">Check-out</label>
           <input
@@ -77,7 +77,7 @@ export default function SearchBar() {
 
       {/* Tamu */}
       <div className="flex items-center gap-2 min-w-[100px] px-3 py-2 rounded-xl hover:bg-slate-50 transition">
-        <Users size={17} className="text-emerald-500 shrink-0" />
+        <Users size={17} className="shrink-0" style={{ color: '#5C8A36' }} />
         <div className="flex flex-col w-full">
           <label className="text-xs text-slate-500 font-medium">Tamu</label>
           <input
@@ -93,7 +93,8 @@ export default function SearchBar() {
 
       <button
         type="submit"
-        className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-6 py-3 rounded-xl flex items-center gap-2 transition min-w-fit"
+        className="text-white font-semibold px-6 py-3 rounded-xl flex items-center gap-2 transition min-w-fit"
+        style={{ backgroundColor: '#5C8A36' }}
       >
         <Search size={17} />
         <span className="hidden sm:inline">Cari Villa</span>

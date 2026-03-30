@@ -22,10 +22,10 @@ function VillasContent() {
   return (
     <div>
       {/* Header */}
-      <div className="bg-gradient-to-r from-emerald-600 to-teal-500 text-white py-12">
+      <div className="text-white py-12" style={{ background: 'linear-gradient(135deg, #2C4B1A 0%, #5C8A36 100%)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-3xl font-bold mb-2">Cari Villa</h1>
-          <p className="text-emerald-100 mb-6">Temukan penginapan terbaik di Puncak Bogor</p>
+          <p className="text-slate-200 mb-6">Temukan penginapan terbaik di Puncak Bogor</p>
           <SearchBar />
         </div>
       </div>
@@ -34,7 +34,7 @@ function VillasContent() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-semibold text-slate-700 flex items-center gap-2">
-            <SlidersHorizontal size={18} className="text-emerald-500" />
+            <SlidersHorizontal size={18} style={{ color: "#5C8A36" }} />
             {filters.search ? `Hasil pencarian: "${filters.search}"` : 'Semua Villa'}
           </h2>
         </div>

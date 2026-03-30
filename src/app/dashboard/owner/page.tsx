@@ -34,7 +34,7 @@ export default function OwnerDashboard() {
       {/* Menu */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <Link href="/dashboard/owner/villas/new" className="bg-white border border-slate-100 rounded-2xl p-5 flex flex-col items-center gap-2 hover:shadow-md transition text-center">
-          <PlusCircle size={28} className="text-emerald-500" />
+          <PlusCircle size={28} style={{ color: "#5C8A36" }} />
           <span className="font-semibold text-slate-700">Posting Villa</span>
           <span className="text-xs text-slate-400">Tambah villa baru</span>
         </Link>

@@ -12,7 +12,7 @@ const roles: { role: Role; label: string; desc: string; icon: React.ReactNode; c
     label: 'Pengunjung',
     desc: 'Cari dan booking villa favoritmu',
     icon: <Users size={32} />,
-    color: 'from-emerald-500 to-teal-400',
+    color: 'from-brand-dark to-brand-primary',
   },
   {
     role: 'owner',
@@ -51,7 +51,7 @@ export default function LoginPage() {
       <div className="w-full max-w-xl">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-slate-800 mb-2">
-            Masuk ke <span className="text-emerald-600">Villa Sadulur</span>
+            Masuk ke <span style={{ color: "#5C8A36" }}>Villa Sadulur</span>
           </h1>
           <p className="text-slate-500 text-sm">
             Pilih role untuk masuk.{' '}

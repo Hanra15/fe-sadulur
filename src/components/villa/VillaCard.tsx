@@ -34,11 +34,13 @@ export default function VillaCard({ villa }: VillaCardProps) {
 
         {/* Info */}
         <div className="p-4">
-          <h3 className="font-semibold text-slate-800 text-base truncate group-hover:text-emerald-600 transition">
+          <h3 className="font-semibold text-slate-800 text-base truncate transition" style={{ color: undefined }}
+            onMouseEnter={e => (e.currentTarget.style.color = '#5C8A36')}
+            onMouseLeave={e => (e.currentTarget.style.color = '')}>
             {villa.name}
           </h3>
           <div className="flex items-center gap-1 text-slate-500 text-sm mt-1">
-            <MapPin size={13} className="text-emerald-500 shrink-0" />
+            <MapPin size={13} className="shrink-0" style={{ color: '#5C8A36' }} />
             <span className="truncate">{villa.location}</span>
           </div>
 
@@ -59,14 +61,14 @@ export default function VillaCard({ villa }: VillaCardProps) {
           {/* Harga */}
           <div className="mt-3 flex items-center justify-between">
             <div>
-              <span className="text-emerald-600 font-bold text-base">
+              <span className="font-bold text-base" style={{ color: '#5C8A36' }}>
                 {formatCurrency(villa.price)}
               </span>
               <span className="text-slate-400 text-xs"> / malam</span>
             </div>
             <span className={`text-xs font-medium px-2 py-0.5 rounded-full border ${
               villa.available
-                ? 'bg-emerald-50 text-emerald-600 border-emerald-100'
+                ? 'bg-green-50 text-green-700 border-green-100'
                 : 'bg-red-50 text-red-500 border-red-100'
             }`}>
               {villa.available ? 'Tersedia' : 'Penuh'}

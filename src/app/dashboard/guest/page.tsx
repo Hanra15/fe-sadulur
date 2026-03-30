@@ -20,11 +20,11 @@ export default function GuestDashboard() {
   return (
     <div className="max-w-4xl mx-auto px-4 py-10">
       {/* Greeting */}
-      <div className="bg-gradient-to-r from-emerald-500 to-teal-400 rounded-2xl p-6 text-white mb-8 flex items-center justify-between">
+      <div className="rounded-2xl p-6 text-white mb-8 flex items-center justify-between" style={{ background: 'linear-gradient(135deg, #3A6928 0%, #5C8A36 100%)' }}>
         <div>
-          <p className="text-emerald-100 text-sm">Selamat datang kembali,</p>
+          <p className="text-slate-200 text-sm">Selamat datang kembali,</p>
           <h1 className="text-2xl font-bold">{user.name}</h1>
-          <p className="text-emerald-100 text-sm mt-1">{user.email}</p>
+          <p className="text-slate-200 text-sm mt-1">{user.email}</p>
         </div>
         <div className="p-4 bg-white/20 rounded-full">
           <User size={36} />
@@ -34,7 +34,7 @@ export default function GuestDashboard() {
       {/* Menu */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         <Link href="/villas" className="bg-white border border-slate-100 rounded-2xl p-5 flex flex-col items-center gap-2 hover:shadow-md transition text-center">
-          <Search size={28} className="text-emerald-500" />
+          <Search size={28} style={{ color: "#5C8A36" }} />
           <span className="font-semibold text-slate-700">Cari Villa</span>
           <span className="text-xs text-slate-400">Temukan penginapan impianmu</span>
         </Link>
@@ -55,7 +55,7 @@ export default function GuestDashboard() {
         <h2 className="font-semibold text-slate-700 mb-4">Booking Terbaru</h2>
         <div className="text-center py-10 text-slate-400 text-sm">
           <CalendarCheck size={40} className="mx-auto mb-2 text-slate-200" />
-          Belum ada booking. <Link href="/villas" className="text-emerald-600 hover:underline">Cari villa sekarang</Link>
+          Belum ada booking. <Link href="/villas" className="hover:underline" style={{ color: "#5C8A36" }}>Cari villa sekarang</Link>
         </div>
       </div>
 

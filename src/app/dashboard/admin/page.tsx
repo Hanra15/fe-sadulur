@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { Users, Building2, CalendarCheck, CreditCard, ShieldCheck, LogOut, BarChart3 } from 'lucide-react'
 
 const menuItems = [
-  { href: '/dashboard/admin/users', icon: <Users size={28} className="text-emerald-500" />, label: 'Manajemen User', desc: 'Kelola pengunjung & pengelola' },
+  { href: '/dashboard/admin/users', icon: <Users size={28} style={{ color: "#5C8A36" }} />, label: 'Manajemen User', desc: 'Kelola pengunjung & pengelola' },
   { href: '/dashboard/admin/villas', icon: <Building2 size={28} className="text-blue-500" />, label: 'Moderasi Villa', desc: 'Review & approve villa' },
   { href: '/dashboard/admin/bookings', icon: <CalendarCheck size={28} className="text-indigo-500" />, label: 'Semua Booking', desc: 'Monitor semua pemesanan' },
   { href: '/dashboard/admin/payments', icon: <CreditCard size={28} className="text-amber-500" />, label: 'Transaksi', desc: 'Monitor pembayaran' },
@@ -44,7 +44,7 @@ export default function AdminDashboard() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         {[
           { label: 'Total Villa', value: '—', color: 'text-blue-600' },
-          { label: 'Total User', value: '—', color: 'text-emerald-600' },
+          { label: 'Total User', value: '—', color: "text-green-700" },
           { label: 'Booking Aktif', value: '—', color: 'text-indigo-600' },
           { label: 'Transaksi', value: '—', color: 'text-amber-600' },
         ].map((stat, i) => (

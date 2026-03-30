@@ -25,7 +25,7 @@ export default function VillaDetailPage() {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center py-40">
-        <Loader2 size={40} className="animate-spin text-emerald-500" />
+        <Loader2 size={40} className="animate-spin" style={{ color: "#5C8A36" }} />
       </div>
     )
   }
@@ -35,7 +35,7 @@ export default function VillaDetailPage() {
       <div className="flex flex-col items-center py-20 text-slate-500 gap-3">
         <AlertCircle size={40} className="text-red-400" />
         <p>Villa tidak ditemukan atau terjadi kesalahan.</p>
-        <Link href="/villas" className="text-emerald-600 hover:underline text-sm">← Kembali ke daftar villa</Link>
+        <Link href="/villas" className="hover:underline text-sm" style={{ color: "#5C8A36" }}>← Kembali ke daftar villa</Link>
       </div>
     )
   }
@@ -75,7 +75,7 @@ export default function VillaDetailPage() {
       )}
 
       {/* Back */}
-      <button onClick={() => router.back()} className="flex items-center gap-1 text-slate-500 hover:text-emerald-600 transition mb-6 text-sm">
+      <button onClick={() => router.back()} className="flex items-center gap-1 text-slate-500 transition mb-6 text-sm">
         <ArrowLeft size={16} /> Kembali
       </button>
 
@@ -136,7 +136,7 @@ export default function VillaDetailPage() {
           <div>
             <h1 className="text-2xl md:text-3xl font-bold text-slate-800 mb-2">{villa.name}</h1>
             <div className="flex flex-wrap items-center gap-3 text-sm text-slate-500">
-              <span className="flex items-center gap-1"><MapPin size={14} className="text-emerald-500" />{villa.location}</span>
+              <span className="flex items-center gap-1"><MapPin size={14} style={{ color: "#5C8A36" }} />{villa.location}</span>
               {villa.rating && (
                 <span className="flex items-center gap-1 text-amber-500 font-medium">
                   <Star size={14} className="fill-amber-400" /> {villa.rating.toFixed(1)}
@@ -148,9 +148,9 @@ export default function VillaDetailPage() {
 
           {/* Fasilitas singkat */}
           <div className="flex flex-wrap gap-4 text-sm text-slate-600">
-            {villa.capacity && <span className="flex items-center gap-1.5 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100"><Users size={15} className="text-emerald-500" /> {villa.capacity} tamu</span>}
-            {villa.bedrooms && <span className="flex items-center gap-1.5 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100"><BedDouble size={15} className="text-emerald-500" /> {villa.bedrooms} kamar tidur</span>}
-            {villa.bathrooms && <span className="flex items-center gap-1.5 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100"><Bath size={15} className="text-emerald-500" /> {villa.bathrooms} kamar mandi</span>}
+            {villa.capacity && <span className="flex items-center gap-1.5 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100"><Users size={15} style={{ color: "#5C8A36" }} /> {villa.capacity} tamu</span>}
+            {villa.bedrooms && <span className="flex items-center gap-1.5 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100"><BedDouble size={15} style={{ color: "#5C8A36" }} /> {villa.bedrooms} kamar tidur</span>}
+            {villa.bathrooms && <span className="flex items-center gap-1.5 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100"><Bath size={15} style={{ color: "#5C8A36" }} /> {villa.bathrooms} kamar mandi</span>}
           </div>
 
           {/* Deskripsi */}
@@ -165,7 +165,7 @@ export default function VillaDetailPage() {
               <h2 className="font-semibold text-slate-700 text-lg mb-3">Fasilitas</h2>
               <div className="flex flex-wrap gap-2">
                 {villa.facilities.map((f, i) => (
-                  <span key={i} className="flex items-center gap-1.5 bg-emerald-50 text-emerald-700 text-sm px-3 py-1.5 rounded-xl border border-emerald-100">
+                  <span key={i} className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-xl border" style={{ backgroundColor: "#EEF5E6", color: "#3A6928", borderColor: "#c6dfa8" }}>
                     {facilityIcons[f.toLowerCase()] ?? '✓'} {f}
                   </span>
                 ))}
@@ -181,7 +181,7 @@ export default function VillaDetailPage() {
                 href={mapsDirectUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs text-emerald-600 hover:underline flex items-center gap-1"
+                className="text-xs hover:underline flex items-center gap-1" style={{ color: "#5C8A36" }}
               >
                 <MapPin size={12} /> Buka di Google Maps
               </a>
@@ -208,7 +208,7 @@ export default function VillaDetailPage() {
         <div className="lg:col-span-1">
           <div className="sticky top-20 bg-white rounded-2xl border border-slate-200 shadow-md p-6">
             <div className="mb-4">
-              <span className="text-2xl font-bold text-emerald-600">{formatCurrency(villa.price)}</span>
+              <span className="text-2xl font-bold" style={{ color: "#5C8A36" }}>{formatCurrency(villa.price)}</span>
               <span className="text-slate-400 text-sm"> / malam</span>
               {villa.priceWeekend && (
                 <div className="text-xs text-slate-400 mt-0.5">
@@ -220,7 +220,7 @@ export default function VillaDetailPage() {
               <div className="space-y-2">
                 <button
                   onClick={() => setShowBooking(true)}
-                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-xl transition"
+                  className="w-full text-white font-semibold py-3 rounded-xl transition" style={{ backgroundColor: "#5C8A36" }}
                 >
                   Pesan Sekarang
                 </button>
@@ -229,7 +229,7 @@ export default function VillaDetailPage() {
                     href={`https://wa.me/${villa.whatsapp}?text=Halo, saya ingin menanyakan ketersediaan ${encodeURIComponent(villa.name)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full flex items-center justify-center gap-2 border border-emerald-200 text-emerald-700 hover:bg-emerald-50 font-medium py-3 rounded-xl transition text-sm"
+                    className="w-full flex items-center justify-center gap-2 border font-medium py-3 rounded-xl transition text-sm" style={{ borderColor: "#9cc475", color: "#3A6928" }}
                   >
                     <span>💬</span> Hubungi via WhatsApp
                   </a>

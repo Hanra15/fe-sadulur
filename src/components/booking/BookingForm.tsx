@@ -47,10 +47,10 @@ export default function BookingForm({ villa, onCancel }: Props) {
   if (submitted) {
     return (
       <div className="text-center py-4">
-        <CheckCircle size={40} className="text-emerald-500 mx-auto mb-2" />
+        <CheckCircle size={40} className="mx-auto mb-2" style={{ color: '#5C8A36' }} />
         <p className="font-semibold text-slate-700">Booking berhasil dikirim!</p>
         <p className="text-xs text-slate-400 mt-1">Tim pengelola akan segera menghubungi Anda.</p>
-        <button onClick={onCancel} className="mt-4 text-emerald-600 text-sm hover:underline">Tutup</button>
+        <button onClick={onCancel} className="mt-4 text-sm hover:underline" style={{ color: '#5C8A36' }}>Tutup</button>
       </div>
     )
   }
@@ -64,7 +64,7 @@ export default function BookingForm({ villa, onCancel }: Props) {
           value={form.guest_name}
           onChange={handleChange}
           required
-          className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm mt-1 outline-none focus:border-emerald-400"
+          className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm mt-1 outline-none focus:border-brand-primary"
           placeholder="Nama lengkap"
         />
       </div>
@@ -76,7 +76,7 @@ export default function BookingForm({ villa, onCancel }: Props) {
           value={form.guest_email}
           onChange={handleChange}
           required
-          className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm mt-1 outline-none focus:border-emerald-400"
+          className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm mt-1 outline-none focus:border-brand-primary"
           placeholder="email@contoh.com"
         />
       </div>
@@ -87,7 +87,7 @@ export default function BookingForm({ villa, onCancel }: Props) {
           value={form.guest_phone}
           onChange={handleChange}
           required
-          className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm mt-1 outline-none focus:border-emerald-400"
+          className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm mt-1 outline-none focus:border-brand-primary"
           placeholder="08xxxxxxxxxx"
         />
       </div>
@@ -101,7 +101,7 @@ export default function BookingForm({ villa, onCancel }: Props) {
             onChange={handleChange}
             required
             min={new Date().toISOString().split('T')[0]}
-            className="w-full border border-slate-200 rounded-lg px-2 py-2 text-sm mt-1 outline-none focus:border-emerald-400"
+            className="w-full border border-slate-200 rounded-lg px-2 py-2 text-sm mt-1 outline-none focus:border-brand-primary"
           />
         </div>
         <div>
@@ -113,7 +113,7 @@ export default function BookingForm({ villa, onCancel }: Props) {
             onChange={handleChange}
             required
             min={form.check_in || new Date().toISOString().split('T')[0]}
-            className="w-full border border-slate-200 rounded-lg px-2 py-2 text-sm mt-1 outline-none focus:border-emerald-400"
+            className="w-full border border-slate-200 rounded-lg px-2 py-2 text-sm mt-1 outline-none focus:border-brand-primary"
           />
         </div>
       </div>
@@ -126,7 +126,7 @@ export default function BookingForm({ villa, onCancel }: Props) {
           max={villa.capacity || 20}
           value={form.guests}
           onChange={handleChange}
-          className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm mt-1 outline-none focus:border-emerald-400"
+          className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm mt-1 outline-none focus:border-brand-primary"
         />
       </div>
       <div>
@@ -136,24 +136,24 @@ export default function BookingForm({ villa, onCancel }: Props) {
           value={form.notes}
           onChange={handleChange}
           rows={2}
-          className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm mt-1 outline-none focus:border-emerald-400 resize-none"
+          className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm mt-1 outline-none focus:border-brand-primary resize-none"
           placeholder="Permintaan khusus..."
         />
       </div>
 
       {/* Total */}
       {nights > 0 && (
-        <div className="bg-emerald-50 rounded-xl p-3 text-sm text-slate-600 border border-emerald-100">
+        <div className="rounded-xl p-3 text-sm text-slate-600 border" style={{ backgroundColor: '#EEF5E6', borderColor: '#c6dfa8' }}>
           <div className="flex justify-between">
             <span>{formatCurrency(villa.price)} × {nights} malam</span>
-            <span className="font-bold text-emerald-700">{formatCurrency(total)}</span>
+            <span className="font-bold" style={{ color: '#3A6928' }}>{formatCurrency(total)}</span>
           </div>
         </div>
       )}
 
       <div className="flex gap-2 pt-1">
         <button type="button" onClick={onCancel} className="flex-1 border border-slate-200 text-slate-600 py-2.5 rounded-xl text-sm hover:bg-slate-50 transition">Batal</button>
-        <button type="submit" className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 rounded-xl text-sm transition">Pesan</button>
+        <button type="submit" className="flex-1 text-white font-semibold py-2.5 rounded-xl text-sm transition" style={{ backgroundColor: '#5C8A36' }}>Pesan</button>
       </div>
     </form>
   )

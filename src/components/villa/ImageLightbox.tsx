@@ -220,7 +220,7 @@ export default function ImageLightbox({ images, initialIndex, onClose }: Props) 
               key={i}
               onClick={() => goTo(i)}
               className={`relative shrink-0 w-14 h-10 rounded-lg overflow-hidden border-2 transition ${
-                i === index ? 'border-emerald-400 opacity-100' : 'border-white/20 opacity-50 hover:opacity-80'
+                i === index ? 'border-white/80 opacity-100' : 'border-white/20 opacity-50 hover:opacity-80'
               }`}
             >
               <Image src={img} alt={`thumb ${i + 1}`} fill className="object-cover" unoptimized sizes="56px" />

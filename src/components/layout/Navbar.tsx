@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useAuth } from '@/contexts/AuthContext'
 import { useState } from 'react'
 import { Menu, X, Home, Search, User, LogOut, LayoutDashboard } from 'lucide-react'
@@ -17,26 +18,36 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="bg-white shadow-md sticky top-0 z-50">
+    <nav className="bg-white shadow-md sticky top-0 z-50 border-b border-slate-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <span className="text-2xl font-bold text-emerald-600">Villa</span>
-            <span className="text-2xl font-bold text-slate-800">Sadulur</span>
+          <Link href="/" className="flex items-center gap-2.5">
+            <Image
+              src="/images/logo-vilasad.png"
+              alt="Villa Sadulur"
+              width={40}
+              height={40}
+              className="rounded-full object-contain"
+              priority
+            />
+            <div className="leading-tight">
+              <span className="text-lg font-extrabold" style={{ color: '#2C4B1A' }}>VILLA{' '}</span>
+              <span className="text-lg font-extrabold" style={{ color: '#5C8A36' }}>SADULUR</span>
+            </div>
           </Link>
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-6">
-            <Link href="/" className="text-slate-600 hover:text-emerald-600 flex items-center gap-1 transition">
+            <Link href="/" className="text-slate-600 hover:text-brand-primary flex items-center gap-1 transition" style={{ ['--tw-text-opacity' as string]: '1' }}>
               <Home size={16} /> Beranda
             </Link>
-            <Link href="/villas" className="text-slate-600 hover:text-emerald-600 flex items-center gap-1 transition">
+            <Link href="/villas" className="text-slate-600 flex items-center gap-1 transition hover:text-brand-primary">
               <Search size={16} /> Cari Villa
             </Link>
             {isLoggedIn ? (
               <>
-                <Link href={getDashboardHref()} className="text-slate-600 hover:text-emerald-600 flex items-center gap-1 transition">
+                <Link href={getDashboardHref()} className="text-slate-600 flex items-center gap-1 transition hover:text-brand-primary">
                   <LayoutDashboard size={16} /> Dashboard
                 </Link>
                 <button
@@ -49,7 +60,8 @@ export default function Navbar() {
             ) : (
               <Link
                 href="/login"
-                className="flex items-center gap-1 bg-emerald-600 text-white hover:bg-emerald-700 px-5 py-1.5 rounded-full text-sm font-medium transition"
+                className="flex items-center gap-1 text-white px-5 py-1.5 rounded-full text-sm font-semibold transition"
+                style={{ backgroundColor: '#5C8A36' }}
               >
                 <User size={15} /> Masuk
               </Link>
@@ -66,15 +78,15 @@ export default function Navbar() {
       {/* Mobile Menu */}
       {menuOpen && (
         <div className="md:hidden bg-white border-t px-4 py-4 flex flex-col gap-4 shadow-md">
-          <Link href="/" className="text-slate-700 hover:text-emerald-600 transition" onClick={() => setMenuOpen(false)}>Beranda</Link>
-          <Link href="/villas" className="text-slate-700 hover:text-emerald-600 transition" onClick={() => setMenuOpen(false)}>Cari Villa</Link>
+          <Link href="/" className="text-slate-700 transition" style={{ color: '#2C4B1A' }} onClick={() => setMenuOpen(false)}>Beranda</Link>
+          <Link href="/villas" className="text-slate-700 transition" onClick={() => setMenuOpen(false)}>Cari Villa</Link>
           {isLoggedIn ? (
             <>
-              <Link href={getDashboardHref()} className="text-slate-700 hover:text-emerald-600 transition" onClick={() => setMenuOpen(false)}>Dashboard</Link>
+              <Link href={getDashboardHref()} className="text-slate-700 transition" onClick={() => setMenuOpen(false)}>Dashboard</Link>
               <button onClick={() => { logout(); setMenuOpen(false) }} className="text-left text-red-600">Keluar</button>
             </>
           ) : (
-            <Link href="/login" className="text-emerald-600 font-medium" onClick={() => setMenuOpen(false)}>Masuk</Link>
+            <Link href="/login" className="font-semibold" style={{ color: '#5C8A36' }} onClick={() => setMenuOpen(false)}>Masuk</Link>
           )}
         </div>
       )}

@@ -20,7 +20,7 @@ export default function VillaListSection({ filters, limit }: Props) {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center py-20">
-        <Loader2 size={36} className="animate-spin text-emerald-500" />
+        <Loader2 size={36} className="animate-spin" style={{ color: '#5C8A36' }} />
       </div>
     )
   }
