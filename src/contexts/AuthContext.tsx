@@ -1,38 +1,17 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState } from 'react'
-import { User, Role } from '@/types'
-
-// Data user statis untuk development (sebelum API autentikasi tersedia)
-const STATIC_USERS: Record<string, User> = {
-  guest: {
-    id: 'guest-001',
-    name: 'Pengunjung Demo',
-    email: 'guest@demo.com',
-    role: 'guest',
-    phone: '081234567890',
-  },
-  owner: {
-    id: 'owner-001',
-    name: 'Pengelola Demo',
-    email: 'owner@demo.com',
-    role: 'owner',
-    phone: '081234567891',
-  },
-  admin: {
-    id: 'admin-001',
-    name: 'Super Admin',
-    email: 'admin@demo.com',
-    role: 'admin',
-    phone: '081234567892',
-  },
-}
+import { createContext, useContext, useEffect, useState, useCallback } from 'react'
+import { User, Role, RegisterPayload } from '@/types'
+import { authService } from '@/services/authService'
 
 interface AuthContextType {
   user: User | null
   isLoggedIn: boolean
-  login: (role: Role) => void
+  isLoading: boolean
+  login: (email: string, password: string) => Promise<void>
+  register: (payload: RegisterPayload) => Promise<void>
   logout: () => void
+  updateProfile: (payload: Partial<User> & { password?: string }) => Promise<void>
   isGuest: boolean
   isOwner: boolean
   isAdmin: boolean
@@ -42,30 +21,66 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(() => {
-    const stored = localStorage.getItem('vs_user')
-    if (stored) {
-      try {
-        setUser(JSON.parse(stored))
-      } catch {
-        localStorage.removeItem('vs_user')
+  // Verifikasi sesi saat app mount via GET /auth/me
+  const restoreSession = useCallback(async () => {
+    if (typeof window === 'undefined') {
+      setIsLoading(false)
+      return
+    }
+
+    const token = localStorage.getItem('vs_token')
+    if (!token) {
+      setIsLoading(false)
+      return
+    }
+
+    try {
+      const res = await authService.getMe()
+      if (res.data) {
+        setUser(res.data)
+        localStorage.setItem('vs_user', JSON.stringify(res.data))
       }
+    } catch {
+      // Token tidak valid — bersihkan
+      localStorage.removeItem('vs_token')
+      localStorage.removeItem('vs_user')
+    } finally {
+      setIsLoading(false)
     }
   }, [])
 
-  const login = (role: Role) => {
-    const selectedUser = STATIC_USERS[role]
-    setUser(selectedUser)
-    localStorage.setItem('vs_user', JSON.stringify(selectedUser))
-    // Token statis untuk development
-    localStorage.setItem('vs_token', `static-token-${role}`)
+  useEffect(() => {
+    restoreSession()
+  }, [restoreSession])
+
+  const login = async (email: string, password: string) => {
+    const res = await authService.login(email, password)
+    const { token, user: userData } = res.data
+    localStorage.setItem('vs_token', token)
+    localStorage.setItem('vs_user', JSON.stringify(userData))
+    setUser(userData)
+  }
+
+  const register = async (payload: RegisterPayload) => {
+    const res = await authService.register(payload)
+    const { token, user: userData } = res.data
+    localStorage.setItem('vs_token', token)
+    localStorage.setItem('vs_user', JSON.stringify(userData))
+    setUser(userData)
   }
 
   const logout = () => {
     setUser(null)
-    localStorage.removeItem('vs_user')
     localStorage.removeItem('vs_token')
+    localStorage.removeItem('vs_user')
+  }
+
+  const updateProfile = async (payload: Partial<User> & { password?: string }) => {
+    const res = await authService.updateProfile(payload)
+    setUser(res.data)
+    localStorage.setItem('vs_user', JSON.stringify(res.data))
   }
 
   return (
@@ -73,8 +88,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       value={{
         user,
         isLoggedIn: !!user,
+        isLoading,
         login,
+        register,
         logout,
+        updateProfile,
         isGuest: user?.role === 'guest',
         isOwner: user?.role === 'owner',
         isAdmin: user?.role === 'admin',
@@ -89,4 +107,11 @@ export function useAuth() {
   const ctx = useContext(AuthContext)
   if (!ctx) throw new Error('useAuth harus digunakan di dalam AuthProvider')
   return ctx
+}
+
+// Helper: role → dashboard path
+export function getDashboardPath(role?: Role): string {
+  if (role === 'admin') return '/dashboard/admin'
+  if (role === 'owner') return '/dashboard/owner'
+  return '/dashboard/guest'
 }

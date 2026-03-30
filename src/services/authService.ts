@@ -5,32 +5,30 @@
  */
 
 import apiClient from '@/lib/apiClient'
-import { ApiResponse, User } from '@/types'
+import { ApiResponse, User, RegisterPayload } from '@/types'
 
 export const authService = {
-  // Akan digunakan saat backend siap
+  // POST /api/auth/login
   login: async (email: string, password: string): Promise<ApiResponse<{ token: string; user: User }>> => {
     const { data } = await apiClient.post('/auth/login', { email, password })
     return data
   },
 
-  register: async (payload: {
-    name: string
-    email: string
-    password: string
-    phone?: string
-    role?: string
-  }): Promise<ApiResponse<{ token: string; user: User }>> => {
+  // POST /api/auth/register
+  register: async (payload: RegisterPayload): Promise<ApiResponse<{ token: string; user: User }>> => {
     const { data } = await apiClient.post('/auth/register', payload)
     return data
   },
 
-  logout: async (): Promise<void> => {
-    await apiClient.post('/auth/logout')
+  // GET /api/auth/me
+  getMe: async (): Promise<ApiResponse<User>> => {
+    const { data } = await apiClient.get('/auth/me')
+    return data
   },
 
-  getProfile: async (): Promise<ApiResponse<User>> => {
-    const { data } = await apiClient.get('/auth/profile')
+  // PUT /api/users/profile
+  updateProfile: async (payload: Partial<User> & { password?: string }): Promise<ApiResponse<User>> => {
+    const { data } = await apiClient.put('/users/profile', payload)
     return data
   },
 }

@@ -3,12 +3,20 @@
 export type Role = 'guest' | 'owner' | 'admin'
 
 export interface User {
-  id: string
+  id: string | number
   name: string
   email: string
   role: Role
   phone?: string
   avatar?: string
+  createdAt?: string
+}
+
+export interface RegisterPayload {
+  name: string
+  email: string
+  password: string
+  phone?: string
 }
 
 export interface Villa {
@@ -60,6 +68,39 @@ export interface Review {
   user?: User
   rating: number
   comment: string
+  created_at?: string
+}
+
+export interface Payment {
+  id: string | number
+  booking_id: string | number
+  booking?: Booking
+  amount: number
+  method?: string
+  status: 'pending' | 'paid' | 'failed' | 'refunded'
+  payment_url?: string
+  snap_token?: string
+  proof_url?: string
+  paid_at?: string
+  created_at?: string
+}
+
+export interface ChatMessage {
+  id: string | number
+  chat_id: string | number
+  sender_id: string | number
+  sender?: User
+  message: string
+  created_at?: string
+}
+
+export interface Chat {
+  id: string | number
+  villa_id?: string | number
+  villa?: Villa
+  participants?: User[]
+  last_message?: ChatMessage
+  messages?: ChatMessage[]
   created_at?: string
 }
 

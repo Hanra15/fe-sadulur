@@ -71,6 +71,13 @@ export default function Navbar() {
               >
                 <User size={15} /> Masuk
               </Link>
+              <Link
+                href="/register"
+                className="flex items-center gap-1 border px-4 py-1.5 rounded-full text-sm font-semibold transition"
+                style={{ borderColor: '#5C8A36', color: '#5C8A36' }}
+              >
+                Daftar
+              </Link>
             )}
           </div>
 
@@ -95,6 +102,7 @@ export default function Navbar() {
             </>
           ) : (
             <Link href="/login" className="font-semibold" style={{ color: '#5C8A36' }} onClick={() => setMenuOpen(false)}>Masuk</Link>
+            <Link href="/register" className="font-semibold text-slate-700" onClick={() => setMenuOpen(false)}>Daftar</Link>
           )}
         </div>
       )}

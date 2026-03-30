@@ -8,8 +8,15 @@ const nextConfig: NextConfig = {
         hostname: 'villa-sadulur.my.id',
         pathname: '/uploads/**',
       },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '3001',
+        pathname: '/uploads/**',
+      },
     ],
   },
 }
 
 export default nextConfig
+
