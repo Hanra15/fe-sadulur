@@ -64,20 +64,22 @@ export default function Navbar() {
                 </button>
               </>
             ) : (
-              <Link
-                href="/login"
-                className="flex items-center gap-1 text-white px-5 py-1.5 rounded-full text-sm font-semibold transition"
-                style={{ backgroundColor: '#5C8A36' }}
-              >
-                <User size={15} /> Masuk
-              </Link>
-              <Link
-                href="/register"
-                className="flex items-center gap-1 border px-4 py-1.5 rounded-full text-sm font-semibold transition"
-                style={{ borderColor: '#5C8A36', color: '#5C8A36' }}
-              >
-                Daftar
-              </Link>
+              <>
+                <Link
+                  href="/login"
+                  className="flex items-center gap-1 text-white px-5 py-1.5 rounded-full text-sm font-semibold transition"
+                  style={{ backgroundColor: '#5C8A36' }}
+                >
+                  <User size={15} /> Masuk
+                </Link>
+                <Link
+                  href="/register"
+                  className="flex items-center gap-1 border px-4 py-1.5 rounded-full text-sm font-semibold transition"
+                  style={{ borderColor: '#5C8A36', color: '#5C8A36' }}
+                >
+                  Daftar
+                </Link>
+              </>
             )}
           </div>
 
@@ -101,8 +103,10 @@ export default function Navbar() {
               <button onClick={() => { logout(); setMenuOpen(false) }} className="text-left text-red-600">Keluar</button>
             </>
           ) : (
-            <Link href="/login" className="font-semibold" style={{ color: '#5C8A36' }} onClick={() => setMenuOpen(false)}>Masuk</Link>
-            <Link href="/register" className="font-semibold text-slate-700" onClick={() => setMenuOpen(false)}>Daftar</Link>
+            <>
+              <Link href="/login" className="font-semibold" style={{ color: '#5C8A36' }} onClick={() => setMenuOpen(false)}>Masuk</Link>
+              <Link href="/register" className="font-semibold text-slate-700" onClick={() => setMenuOpen(false)}>Daftar</Link>
+            </>
           )}
         </div>
       )}
