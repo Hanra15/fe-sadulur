@@ -1,6 +1,6 @@
 // Tipe data utama untuk Villa Sadulur
 
-export type Role = 'guest' | 'owner' | 'admin'
+export type Role = 'visitor' | 'guest' | 'owner' | 'admin'
 
 export interface User {
   id: string | number

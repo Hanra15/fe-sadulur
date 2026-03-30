@@ -14,7 +14,7 @@ export default function Navbar() {
     if (!user) return '/login'
     if (user.role === 'admin') return '/dashboard/admin'
     if (user.role === 'owner') return '/dashboard/owner'
-    return '/dashboard/guest'
+    return '/dashboard/guest' // visitor & guest
   }
 
   return (

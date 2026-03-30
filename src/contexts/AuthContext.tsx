@@ -56,19 +56,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [restoreSession])
 
   const login = async (email: string, password: string) => {
+    // Response: { status, token, user } — flat, bukan ApiResponse<{token,user}>
     const res = await authService.login(email, password)
-    const { token, user: userData } = res.data
-    localStorage.setItem('vs_token', token)
-    localStorage.setItem('vs_user', JSON.stringify(userData))
-    setUser(userData)
+    localStorage.setItem('vs_token', res.token)
+    localStorage.setItem('vs_user', JSON.stringify(res.user))
+    setUser(res.user)
   }
 
   const register = async (payload: RegisterPayload) => {
+    // Response: { status, token, user } — flat
     const res = await authService.register(payload)
-    const { token, user: userData } = res.data
-    localStorage.setItem('vs_token', token)
-    localStorage.setItem('vs_user', JSON.stringify(userData))
-    setUser(userData)
+    localStorage.setItem('vs_token', res.token)
+    localStorage.setItem('vs_user', JSON.stringify(res.user))
+    setUser(res.user)
   }
 
   const logout = () => {
@@ -93,7 +93,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         register,
         logout,
         updateProfile,
-        isGuest: user?.role === 'guest',
+        // visitor = pengunjung biasa (same as guest)
+        isGuest: user?.role === 'guest' || user?.role === 'visitor',
         isOwner: user?.role === 'owner',
         isAdmin: user?.role === 'admin',
       }}

@@ -19,7 +19,7 @@ export default function LoginPage() {
     if (!isLoading && isLoggedIn && user) {
       if (user.role === 'admin') router.push('/dashboard/admin')
       else if (user.role === 'owner') router.push('/dashboard/owner')
-      else router.push('/dashboard/guest')
+      else router.push('/dashboard/guest') // visitor & guest
     }
   }, [isLoggedIn, isLoading, user, router])
 

@@ -17,7 +17,9 @@ export default function RegisterPage() {
 
   useEffect(() => {
     if (!isLoading && isLoggedIn && user) {
-      router.push('/dashboard/guest')
+      if (user.role === 'admin') router.push('/dashboard/admin')
+      else if (user.role === 'owner') router.push('/dashboard/owner')
+      else router.push('/dashboard/guest') // visitor & guest
     }
   }, [isLoggedIn, isLoading, user, router])
 
@@ -29,8 +31,8 @@ export default function RegisterPage() {
       setError('Password dan konfirmasi password tidak cocok.')
       return
     }
-    if (form.password.length < 6) {
-      setError('Password minimal 6 karakter.')
+    if (form.password.length < 8) {
+      setError('Password minimal 8 karakter.')
       return
     }
 
