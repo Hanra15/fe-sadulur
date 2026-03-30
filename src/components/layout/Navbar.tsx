@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useAuth } from '@/contexts/AuthContext'
 import { useState } from 'react'
-import { Menu, X, Home, Search, User, LogOut, LayoutDashboard } from 'lucide-react'
+import { Menu, X, Home, Search, User, LogOut, LayoutDashboard, Info, Phone } from 'lucide-react'
 
 export default function Navbar() {
   const { user, isLoggedIn, logout } = useAuth()
@@ -45,6 +45,12 @@ export default function Navbar() {
             <Link href="/villas" className="text-slate-600 flex items-center gap-1 transition hover:text-brand-primary">
               <Search size={16} /> Cari Villa
             </Link>
+            <Link href="/about" className="text-slate-600 flex items-center gap-1 transition hover:text-brand-primary">
+              <Info size={16} /> Tentang
+            </Link>
+            <Link href="/contact" className="text-slate-600 flex items-center gap-1 transition hover:text-brand-primary">
+              <Phone size={16} /> Kontak
+            </Link>
             {isLoggedIn ? (
               <>
                 <Link href={getDashboardHref()} className="text-slate-600 flex items-center gap-1 transition hover:text-brand-primary">
@@ -80,6 +86,8 @@ export default function Navbar() {
         <div className="md:hidden bg-white border-t px-4 py-4 flex flex-col gap-4 shadow-md">
           <Link href="/" className="text-slate-700 transition" style={{ color: '#2C4B1A' }} onClick={() => setMenuOpen(false)}>Beranda</Link>
           <Link href="/villas" className="text-slate-700 transition" onClick={() => setMenuOpen(false)}>Cari Villa</Link>
+          <Link href="/about" className="text-slate-700 transition" onClick={() => setMenuOpen(false)}>Tentang Kami</Link>
+          <Link href="/contact" className="text-slate-700 transition" onClick={() => setMenuOpen(false)}>Kontak</Link>
           {isLoggedIn ? (
             <>
               <Link href={getDashboardHref()} className="text-slate-700 transition" onClick={() => setMenuOpen(false)}>Dashboard</Link>
