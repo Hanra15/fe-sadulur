@@ -59,7 +59,7 @@ export default function OwnerVillasPage() {
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
 
-  const [deleteId, setDeleteId] = useState<number | null>(null)
+  const [deleteId, setDeleteId] = useState<string | null>(null)
   const [deleting, setDeleting] = useState(false)
 
   const loadVillas = useCallback(async (p = 1) => {
@@ -112,7 +112,7 @@ export default function OwnerVillasPage() {
       removeImageUrls: removedUrls,
     }
     try {
-      if (editVilla) { await villaService.update(editVilla.id, payload) }
+      if (editVilla) { await villaService.update(editVilla.slug ?? String(editVilla.id), payload) }
       else { await villaService.create(payload) }
       setShowModal(false); loadVillas(page)
     } catch (e: unknown) {
@@ -186,9 +186,9 @@ export default function OwnerVillasPage() {
                   </td>
                   <td className="px-4 py-3 text-center">
                     <div className="flex items-center justify-center gap-1.5">
-                      <a href={`/villas/${v.id}`} target="_blank" rel="noopener noreferrer" className="p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 transition" title="Lihat halaman villa"><Eye size={13} /></a>
+                      <a href={`/villas/${v.slug ?? v.id}`} target="_blank" rel="noopener noreferrer" className="p-1.5 rounded-lg text-slate-400 hover:bg-slate-100 transition" title="Lihat halaman villa"><Eye size={13} /></a>
                       <button onClick={() => openEdit(v)} className="p-1.5 rounded-lg text-blue-600 hover:bg-blue-50 transition"><Pencil size={13} /></button>
-                      <button onClick={() => setDeleteId(v.id)} className="p-1.5 rounded-lg text-red-500 hover:bg-red-50 transition"><Trash2 size={13} /></button>
+                      <button onClick={() => setDeleteId(v.slug ?? String(v.id))} className="p-1.5 rounded-lg text-red-500 hover:bg-red-50 transition"><Trash2 size={13} /></button>
                     </div>
                   </td>
                 </tr>

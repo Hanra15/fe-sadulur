@@ -13,14 +13,14 @@ import BookingForm from '@/components/booking/BookingForm'
 import ImageLightbox from '@/components/villa/ImageLightbox'
 
 export default function VillaDetailPage() {
-  const { id } = useParams<{ id: string }>()
+  const { slug } = useParams<{ slug: string }>()
   const router = useRouter()
   const [showBooking, setShowBooking] = useState(false)
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ['villa', id],
-    queryFn: () => villaService.getById(id),
+    queryKey: ['villa', slug],
+    queryFn: () => villaService.getBySlug(slug),
   })
 
   if (isLoading) {
@@ -244,7 +244,7 @@ export default function VillaDetailPage() {
       </div>
 
       {/* Reviews section */}
-      <VillaReviews villaId={id} />
+      <VillaReviews villaId={slug} />
     </div>
   )
 }

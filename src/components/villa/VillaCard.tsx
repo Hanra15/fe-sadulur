@@ -12,7 +12,7 @@ export default function VillaCard({ villa }: VillaCardProps) {
   const thumbnail = getVillaThumbnail(villa)
 
   return (
-    <Link href={`/villas/${villa.id}`} className="group block">
+    <Link href={`/villas/${villa.slug ?? villa.id}`} className="group block">
       <div className="bg-white rounded-2xl overflow-hidden shadow hover:shadow-lg transition-all duration-300 border border-slate-100">
         {/* Gambar */}
         <div className="relative h-52 overflow-hidden bg-slate-200">

@@ -41,8 +41,8 @@ export const villaService = {
     return data
   },
 
-  getById: async (id: string | number): Promise<ApiResponse<Villa>> => {
-    const { data } = await apiClient.get(`/villas/${id}`)
+  getBySlug: async (slug: string): Promise<ApiResponse<Villa>> => {
+    const { data } = await apiClient.get(`/villas/${slug}`)
     return data
   },
 
@@ -66,7 +66,7 @@ export const villaService = {
     return data
   },
 
-  update: async (id: string | number, payload: Partial<VillaFormPayload>): Promise<ApiResponse<Villa>> => {
+  update: async (slug: string, payload: Partial<VillaFormPayload>): Promise<ApiResponse<Villa>> => {
     const formData = new FormData()
     Object.entries(payload).forEach(([key, val]) => {
       if (val === undefined || val === null) return
@@ -89,24 +89,24 @@ export const villaService = {
     if (payload.removeImageUrls?.length) {
       payload.removeImageUrls.forEach(url => formData.append('removeImages', url))
     }
-    const { data } = await apiClient.put(`/villas/${id}`, formData, {
+    const { data } = await apiClient.put(`/villas/${slug}`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     })
     return data
   },
 
-  delete: async (id: string | number): Promise<ApiResponse<null>> => {
-    const { data } = await apiClient.delete(`/villas/${id}`)
+  delete: async (slug: string): Promise<ApiResponse<null>> => {
+    const { data } = await apiClient.delete(`/villas/${slug}`)
     return data
   },
 
-  getCalendar: async (id: string | number): Promise<ApiResponse<CalendarEntry[]>> => {
-    const { data } = await apiClient.get(`/villas/${id}/calendar`)
+  getCalendar: async (slug: string): Promise<ApiResponse<CalendarEntry[]>> => {
+    const { data } = await apiClient.get(`/villas/${slug}/calendar`)
     return data
   },
 
-  updateCalendar: async (id: string | number, payload: CalendarEntry[]): Promise<ApiResponse<CalendarEntry[]>> => {
-    const { data } = await apiClient.post(`/villas/${id}/calendar`, payload)
+  updateCalendar: async (slug: string, payload: CalendarEntry[]): Promise<ApiResponse<CalendarEntry[]>> => {
+    const { data } = await apiClient.post(`/villas/${slug}/calendar`, payload)
     return data
   },
 }

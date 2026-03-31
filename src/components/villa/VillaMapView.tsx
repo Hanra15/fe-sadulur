@@ -227,7 +227,7 @@ export default function VillaMapView({ villas, searchRadius = 5, onAreaSearch }:
                     {formatCurrency(v.price)}<span style={{ fontWeight: 400, fontSize: 11, color: '#94a3b8' }}>/malam</span>
                   </div>
                   <a
-                    href={`/villas/${v.id}`}
+                    href={`/villas/${v.slug ?? v.id}`}
                     style={{ display: 'block', background: '#5C8A36', color: '#fff', padding: '5px 0', borderRadius: 8, fontSize: 12, fontWeight: 600, textAlign: 'center', textDecoration: 'none' }}
                   >
                     Lihat Villa →

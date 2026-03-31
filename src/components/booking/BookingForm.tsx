@@ -40,7 +40,7 @@ export default function BookingForm({ villa, onCancel }: Props) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!isLoggedIn) {
-      router.push(`/login?redirect=/villas/${villa.id}`)
+      router.push(`/login?redirect=/villas/${villa.slug ?? villa.id}`)
       return
     }
     if (nights <= 0) {

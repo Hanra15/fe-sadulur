@@ -35,6 +35,7 @@ export interface Villa {
   available: boolean
   rating?: number
   reviews_count?: number
+  slug?: string
   lat?: number
   lng?: number
   latitude?: number
