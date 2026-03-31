@@ -5,6 +5,7 @@ export const paymentService = {
   // POST /api/payments - buat pembayaran untuk booking
   create: async (payload: {
     booking_id: string | number
+    amount: number
     method?: string
   }): Promise<ApiResponse<Payment>> => {
     const { data } = await apiClient.post('/payments', payload)

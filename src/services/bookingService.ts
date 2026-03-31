@@ -11,8 +11,8 @@ export const bookingService = {
   },
 
   // GET /api/bookings - list booking user login
-  getMyBookings: async (): Promise<ApiResponse<Booking[]>> => {
-    const { data } = await apiClient.get('/bookings')
+  getMyBookings: async (params?: { status?: string; page?: number; limit?: number }): Promise<{ status: string; data: Booking[]; pagination?: { total: number; page: number; limit: number; totalPages: number } }> => {
+    const { data } = await apiClient.get('/bookings', { params })
     return data
   },
 

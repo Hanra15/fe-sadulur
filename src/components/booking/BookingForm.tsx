@@ -5,7 +5,8 @@ import { Villa } from '@/types'
 import { calculateNights, formatCurrency } from '@/utils'
 import { useAuth } from '@/contexts/AuthContext'
 import { useRouter } from 'next/navigation'
-import { Calendar, Users, CheckCircle } from 'lucide-react'
+import { bookingService } from '@/services/bookingService'
+import { Calendar, Users, CheckCircle, Loader2 } from 'lucide-react'
 
 interface Props {
   villa: Villa
@@ -24,7 +25,9 @@ export default function BookingForm({ villa, onCancel }: Props) {
     guests: 1,
     notes: '',
   })
-  const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+  const [bookingCode, setBookingCode] = useState('')
 
   const nights = form.check_in && form.check_out ? calculateNights(form.check_in, form.check_out) : 0
   const total = nights > 0 ? nights * villa.price : 0
@@ -34,23 +37,54 @@ export default function BookingForm({ villa, onCancel }: Props) {
     setForm({ ...form, [name]: name === 'guests' ? Number(value) : value })
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!isLoggedIn) {
-      router.push('/login')
+      router.push(`/login?redirect=/villas/${villa.id}`)
       return
     }
-    // TODO: Integrasikan dengan bookingService.create() saat API tersedia
-    setSubmitted(true)
+    if (nights <= 0) {
+      setError('Pilih tanggal check-in dan check-out yang valid')
+      return
+    }
+    setError('')
+    setLoading(true)
+    try {
+      const res = await bookingService.create({
+        villa_id: villa.id,
+        customerName: form.guest_name,
+        customerPhone: form.guest_phone,
+        customerEmail: form.guest_email || undefined,
+        villaName: villa.name,
+        villaLocation: villa.location,
+        villaPrice: villa.price,
+        checkInDate: form.check_in,
+        checkOutDate: form.check_out,
+        numberOfGuests: form.guests,
+      })
+      setBookingCode(res.data?.bookingCode ?? '')
+    } catch (err: unknown) {
+      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message
+      setError(msg || 'Gagal membuat booking. Silakan coba lagi.')
+    } finally {
+      setLoading(false)
+    }
   }
 
-  if (submitted) {
+  if (bookingCode) {
     return (
       <div className="text-center py-4">
         <CheckCircle size={40} className="mx-auto mb-2" style={{ color: '#5C8A36' }} />
-        <p className="font-semibold text-slate-700">Booking berhasil dikirim!</p>
-        <p className="text-xs text-slate-400 mt-1">Tim pengelola akan segera menghubungi Anda.</p>
-        <button onClick={onCancel} className="mt-4 text-sm hover:underline" style={{ color: '#5C8A36' }}>Tutup</button>
+        <p className="font-semibold text-slate-700">Booking berhasil!</p>
+        <div className="mt-2 mb-3 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 inline-block">
+          <p className="text-xs text-slate-400">Kode Booking</p>
+          <p className="font-mono font-bold text-base tracking-widest" style={{ color: '#3A6928' }}>{bookingCode}</p>
+        </div>
+        <p className="text-xs text-slate-400">Pengelola akan menghubungi Anda segera.</p>
+        <div className="flex gap-2 mt-4">
+          <button onClick={onCancel} className="flex-1 border border-slate-200 text-slate-600 py-2 rounded-xl text-sm hover:bg-slate-50">Tutup</button>
+          <button onClick={() => router.push('/dashboard/guest/bookings')} className="flex-1 text-white py-2 rounded-xl text-sm font-semibold" style={{ background: '#5C8A36' }}>Lihat Booking</button>
+        </div>
       </div>
     )
   }
@@ -75,13 +109,12 @@ export default function BookingForm({ villa, onCancel }: Props) {
           type="email"
           value={form.guest_email}
           onChange={handleChange}
-          required
           className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm mt-1 outline-none focus:border-brand-primary"
           placeholder="email@contoh.com"
         />
       </div>
       <div>
-        <label className="text-xs text-slate-500 font-medium">No. HP</label>
+        <label className="text-xs text-slate-500 font-medium">No. HP <span className="text-red-400">*</span></label>
         <input
           name="guest_phone"
           value={form.guest_phone}
@@ -151,9 +184,13 @@ export default function BookingForm({ villa, onCancel }: Props) {
         </div>
       )}
 
+      {error && <p className="text-xs text-red-500 bg-red-50 rounded-lg px-3 py-2">{error}</p>}
+
       <div className="flex gap-2 pt-1">
         <button type="button" onClick={onCancel} className="flex-1 border border-slate-200 text-slate-600 py-2.5 rounded-xl text-sm hover:bg-slate-50 transition">Batal</button>
-        <button type="submit" className="flex-1 text-white font-semibold py-2.5 rounded-xl text-sm transition" style={{ backgroundColor: '#5C8A36' }}>Pesan</button>
+        <button type="submit" disabled={loading} className="flex-1 text-white font-semibold py-2.5 rounded-xl text-sm transition flex items-center justify-center gap-1.5 disabled:opacity-60" style={{ backgroundColor: '#5C8A36' }}>
+          {loading ? <><Loader2 size={14} className="animate-spin" />Memproses...</> : 'Pesan'}
+        </button>
       </div>
     </form>
   )

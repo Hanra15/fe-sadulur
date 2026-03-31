@@ -3,6 +3,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useParams, useRouter } from 'next/navigation'
 import { villaService } from '@/services/villaService'
+import { reviewService } from '@/services/reviewService'
 import { formatCurrency, getImageUrl } from '@/utils'
 import { MapPin, Star, Users, BedDouble, Bath, Wifi, Car, Loader2, AlertCircle, ArrowLeft, Expand } from 'lucide-react'
 import Image from 'next/image'
@@ -240,6 +241,65 @@ export default function VillaDetailPage() {
             )}
           </div>
         </div>
+      </div>
+
+      {/* Reviews section */}
+      <VillaReviews villaId={id} />
+    </div>
+  )
+}
+
+function VillaReviews({ villaId }: { villaId: string }) {
+  const { data, isLoading } = useQuery({
+    queryKey: ['villa-reviews', villaId],
+    queryFn: () => reviewService.getByVilla(villaId),
+  })
+
+  // Backend wraps review list as { status, data, total, average_rating }
+  type ReviewListResponse = { status: string; data: { id: number; rating: number; comment: string; reviewer?: { name: string }; createdAt?: string; created_at?: string }[]; total?: number; average_rating?: number | null }
+  const res = data as unknown as ReviewListResponse
+  const reviews = res?.data ?? []
+  const avg = res?.average_rating
+
+  if (isLoading) return null
+  if (reviews.length === 0) return null
+
+  return (
+    <div className="mt-10">
+      <div className="flex items-center gap-3 mb-5">
+        <h2 className="text-xl font-semibold text-slate-700">Ulasan Tamu</h2>
+        {avg && (
+          <span className="flex items-center gap-1.5 bg-amber-50 border border-amber-200 px-3 py-1 rounded-full text-sm font-semibold text-amber-600">
+            <Star size={13} className="fill-amber-400 text-amber-400" />
+            {Number(avg).toFixed(1)}
+            <span className="text-amber-400 font-normal text-xs">({reviews.length} ulasan)</span>
+          </span>
+        )}
+      </div>
+      <div className="space-y-4">
+        {reviews.map(r => (
+          <div key={r.id} className="bg-white border border-slate-100 rounded-2xl p-4">
+            <div className="flex items-start justify-between gap-2 mb-2">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0" style={{ background: 'linear-gradient(135deg, #3A6928, #5C8A36)' }}>
+                  {(r.reviewer?.name ?? 'T').charAt(0).toUpperCase()}
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-slate-700">{r.reviewer?.name ?? 'Tamu'}</p>
+                  <p className="text-[10px] text-slate-400">
+                    {(r.createdAt ?? r.created_at) ? new Date(r.createdAt ?? r.created_at!).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }) : ''}
+                  </p>
+                </div>
+              </div>
+              <div className="flex gap-0.5 shrink-0">
+                {[1,2,3,4,5].map(n => (
+                  <Star key={n} size={13} className={n <= r.rating ? 'fill-amber-400 text-amber-400' : 'text-slate-200'} />
+                ))}
+              </div>
+            </div>
+            {r.comment && <p className="text-sm text-slate-600 leading-relaxed">{r.comment}</p>}
+          </div>
+        ))}
       </div>
     </div>
   )
