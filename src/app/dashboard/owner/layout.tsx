@@ -3,13 +3,12 @@
 import { useAuth } from '@/contexts/AuthContext'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
-import { LayoutDashboard, Building2, CalendarCheck, MessageCircle, PlusCircle } from 'lucide-react'
+import { LayoutDashboard, Building2, CalendarCheck, MessageCircle } from 'lucide-react'
 import DashboardShell, { DashboardNavItem } from '@/components/layout/DashboardShell'
 
 const navItems: DashboardNavItem[] = [
   { href: '/dashboard/owner', icon: LayoutDashboard, label: 'Beranda', exact: true },
   { href: '/dashboard/owner/villas', icon: Building2, label: 'Villa Saya' },
-  { href: '/dashboard/owner/villas/add', icon: PlusCircle, label: 'Tambah Villa' },
   { href: '/dashboard/owner/bookings', icon: CalendarCheck, label: 'Booking' },
   { href: '/dashboard/owner/messages', icon: MessageCircle, label: 'Pesan' },
 ]

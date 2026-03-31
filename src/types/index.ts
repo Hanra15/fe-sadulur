@@ -62,6 +62,7 @@ export interface Booking {
   checkOutDate?: string
   bookingDate?: string
   numberOfGuests?: number
+  totalPrice?: number
   status: 'pending' | 'confirmed' | 'cancelled' | 'paid'
   createdAt?: string
   updatedAt?: string
