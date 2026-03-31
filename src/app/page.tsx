@@ -1,5 +1,6 @@
 import SearchBar from '@/components/villa/SearchBar'
 import VillaListSection from '@/components/villa/VillaListSection'
+import TestimonialsSection from '@/components/home/TestimonialsSection'
 import { Shield, MapPin, Star, Clock, ArrowRight, CheckCircle, Users, Home } from 'lucide-react'
 import Link from 'next/link'
 
@@ -233,50 +234,7 @@ export default function HomePage() {
       {/* ========================
           TESTIMONI
       ======================== */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
-        <div className="text-center mb-12">
-          <span className="inline-block text-xs font-semibold tracking-widest uppercase mb-3" style={{ color: '#5C8A36' }}>
-            Testimoni
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 animate-fadeInUp">Kata Mereka</h2>
-          <p className="text-slate-500 mt-2 animate-fadeInUp delay-100">Pengalaman nyata dari tamu Villa Sadulur</p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {[
-            { name: 'Rina Supriati', loc: 'Jakarta', review: 'Villa-nya bersih dan nyaman banget! Anak-anak senang main di sekitar villa. Sangat recommended buat keluarga!', rating: 5 },
-            { name: 'Budi Santoso', loc: 'Bandung', review: 'Lokasi strategis dekat Taman Safari, jalannya gampang. Pengelola juga responsif dan ramah. Pasti balik lagi!', rating: 5 },
-            { name: 'Dewi Kurnia', loc: 'Bekasi', review: 'Booking gampang banget, harga transparan. Pemandangannya luar biasa, udara segerrr banget. Worth it banget!', rating: 4 },
-          ].map((t, i) => (
-            <div
-              key={i}
-              className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 animate-fadeInUp"
-              style={{ animationDelay: `${i * 0.15}s` }}
-            >
-              {/* Quote icon */}
-              <div className="text-4xl font-black opacity-10 text-slate-800 leading-none mb-2 select-none">&ldquo;</div>
-              <div className="flex gap-1 mb-3">
-                {[...Array(t.rating)].map((_, j) => (
-                  <Star key={j} size={13} className="text-amber-400 fill-amber-400" />
-                ))}
-              </div>
-              <p className="text-slate-600 text-sm leading-relaxed mb-5 italic">{t.review}</p>
-              <div className="flex items-center gap-3">
-                <div
-                  className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold shrink-0"
-                  style={{ background: 'linear-gradient(135deg, #3A6928, #5C8A36)' }}
-                >
-                  {t.name[0]}
-                </div>
-                <div>
-                  <div className="font-semibold text-slate-800 text-sm">{t.name}</div>
-                  <div className="text-slate-400 text-xs">{t.loc}</div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+      <TestimonialsSection />
 
       {/* ========================
           CTA

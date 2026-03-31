@@ -39,4 +39,22 @@ export const authService = {
     const { data } = await apiClient.put('/auth/profile', payload)
     return data
   },
+
+  // POST /api/auth/forgot-password → { status, message }
+  forgotPassword: async (email: string): Promise<{ status: string; message: string }> => {
+    const { data } = await apiClient.post('/auth/forgot-password', { email })
+    return data
+  },
+
+  // GET /api/auth/verify-reset-token/:token → { status, valid, message }
+  verifyResetToken: async (token: string): Promise<{ status: string; valid: boolean; message: string }> => {
+    const { data } = await apiClient.get(`/auth/verify-reset-token/${token}`)
+    return data
+  },
+
+  // POST /api/auth/reset-password → { status, message }
+  resetPassword: async (token: string, new_password: string): Promise<{ status: string; message: string }> => {
+    const { data } = await apiClient.post('/auth/reset-password', { token, new_password })
+    return data
+  },
 }

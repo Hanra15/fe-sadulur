@@ -128,6 +128,32 @@ export interface Chat {
   created_at?: string
 }
 
+export interface Testimonial {
+  id: number
+  name: string
+  position?: string
+  message: string
+  rating: number
+  photo?: string
+  is_active: boolean
+  sort_order: number
+  createdAt?: string
+}
+
+export interface Article {
+  id: number
+  title: string
+  slug: string
+  content?: string
+  excerpt?: string
+  cover_image?: string
+  author_id?: number
+  author?: { id: number; name: string }
+  status: 'published' | 'draft'
+  published_at?: string
+  createdAt?: string
+}
+
 export interface ApiResponse<T> {
   status: string
   data: T

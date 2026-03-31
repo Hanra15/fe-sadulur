@@ -113,6 +113,15 @@ export default function LoginPage() {
                   {showPass ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
               </div>
+              <div className="text-right mt-1">
+                <Link
+                  href="/forgot-password"
+                  className="text-xs hover:underline"
+                  style={{ color: '#5C8A36' }}
+                >
+                  Lupa Password?
+                </Link>
+              </div>
             </div>
 
             <button
