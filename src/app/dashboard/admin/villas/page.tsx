@@ -4,9 +4,19 @@ import { useEffect, useState } from 'react'
 import { villaService, VillaFormPayload } from '@/services/villaService'
 import { Villa } from '@/types'
 import { formatCurrency, getVillaThumbnail } from '@/utils'
-import { Plus, Pencil, Trash2, X, ChevronLeft, ChevronRight, ImageOff } from 'lucide-react'
+import { Plus, Pencil, Trash2, X, ChevronLeft, ChevronRight, ImageOff, Map } from 'lucide-react'
 import Image from 'next/image'
 import ImageUploader, { UploadedImage } from '@/components/ui/ImageUploader'
+import dynamic from 'next/dynamic'
+
+const LocationPicker = dynamic(() => import('@/components/ui/LocationPicker'), {
+  ssr: false,
+  loading: () => (
+    <div className="rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-center" style={{ height: 340 }}>
+      <span className="text-xs text-slate-400">Memuat peta...</span>
+    </div>
+  ),
+})
 
 const EMPTY_FORM: VillaFormPayload = {
   name: '', location: '', description: '', price: 0,
@@ -33,6 +43,7 @@ export default function AdminVillasPage() {
   const [keepUrls, setKeepUrls] = useState<string[]>([])
   // Server image URLs the user removed — sent to backend as removeImages
   const [removedUrls, setRemovedUrls] = useState<string[]>([])
+  const [showMap, setShowMap] = useState(false)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
 
@@ -66,6 +77,7 @@ export default function AdminVillasPage() {
     setNewImages([])
     setKeepUrls([])
     setRemovedUrls([])
+    setShowMap(false)
     setError('')
     setShowModal(true)
   }
@@ -85,6 +97,7 @@ export default function AdminVillasPage() {
     setKeepUrls(v.images ?? [])
     setNewImages([])
     setRemovedUrls([])
+    setShowMap(!!(v.lat && v.lng))
     setError('')
     setShowModal(true)
   }
@@ -257,12 +270,41 @@ export default function AdminVillasPage() {
                   <FormField label="No. WhatsApp">
                     <input className="input-base" value={form.whatsapp ?? ''} onChange={e => setField('whatsapp', e.target.value)} placeholder="628xxxxxxxx" />
                   </FormField>
-                  <FormField label="Latitude">
-                    <input type="number" step="any" className="input-base" value={form.lat ?? ''} onChange={e => setField('lat', e.target.value ? Number(e.target.value) : undefined)} />
-                  </FormField>
-                  <FormField label="Longitude">
-                    <input type="number" step="any" className="input-base" value={form.lng ?? ''} onChange={e => setField('lng', e.target.value ? Number(e.target.value) : undefined)} />
-                  </FormField>
+
+                </div>
+
+                {/* Location Picker */}
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="text-xs font-medium text-slate-600">Lokasi di Peta (Lat / Lng)</label>
+                    <button
+                      type="button"
+                      onClick={() => setShowMap(v => !v)}
+                      className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition
+                        ${showMap ? 'bg-purple-100 text-purple-700 hover:bg-purple-200' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
+                    >
+                      <Map size={12} />
+                      {showMap ? 'Sembunyikan Peta' : 'Pilih di Peta'}
+                    </button>
+                  </div>
+                  {showMap ? (
+                    <LocationPicker
+                      lat={form.lat}
+                      lng={form.lng}
+                      onChange={(lat, lng) => { setField('lat', lat); setField('lng', lng) }}
+                    />
+                  ) : (
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-xs text-slate-400 mb-1">Latitude</label>
+                        <input type="number" step="any" className="input-base" value={form.lat ?? ''} onChange={e => setField('lat', e.target.value ? Number(e.target.value) : undefined)} placeholder="-6.9175" />
+                      </div>
+                      <div>
+                        <label className="block text-xs text-slate-400 mb-1">Longitude</label>
+                        <input type="number" step="any" className="input-base" value={form.lng ?? ''} onChange={e => setField('lng', e.target.value ? Number(e.target.value) : undefined)} placeholder="107.6191" />
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 <FormField label="Fasilitas (pisahkan koma)">
