@@ -6,12 +6,14 @@ import { Villa } from '@/types'
 import { formatCurrency, getVillaThumbnail } from '@/utils'
 import { Plus, Pencil, Trash2, X, ChevronLeft, ChevronRight, ImageOff } from 'lucide-react'
 import Image from 'next/image'
+import ImageUploader, { UploadedImage } from '@/components/ui/ImageUploader'
 
 const EMPTY_FORM: VillaFormPayload = {
   name: '', location: '', description: '', price: 0,
   priceWeekend: undefined, capacity: 1, bedrooms: 1, bathrooms: 1,
   whatsapp: '', facilities: [], available: true,
-  lat: undefined, lng: undefined, imageUrls: [],
+  lat: undefined, lng: undefined,
+  imageUrls: [], imageFiles: [],
 }
 
 export default function AdminVillasPage() {
@@ -25,7 +27,10 @@ export default function AdminVillasPage() {
   const [editVilla, setEditVilla] = useState<Villa | null>(null)
   const [form, setForm] = useState<VillaFormPayload>(EMPTY_FORM)
   const [facilitiesInput, setFacilitiesInput] = useState('')
-  const [imageUrlsInput, setImageUrlsInput] = useState('')
+  // New-upload images (local File objects + previews)
+  const [newImages, setNewImages] = useState<UploadedImage[]>([])
+  // Existing server image URLs to keep
+  const [keepUrls, setKeepUrls] = useState<string[]>([])
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
 
@@ -56,7 +61,8 @@ export default function AdminVillasPage() {
     setEditVilla(null)
     setForm(EMPTY_FORM)
     setFacilitiesInput('')
-    setImageUrlsInput('')
+    setNewImages([])
+    setKeepUrls([])
     setError('')
     setShowModal(true)
   }
@@ -70,9 +76,11 @@ export default function AdminVillasPage() {
       whatsapp: v.whatsapp ?? '', facilities: v.facilities ?? [],
       available: v.available, lat: v.lat, lng: v.lng,
       imageUrls: v.images ?? [],
+      imageFiles: [],
     })
     setFacilitiesInput((v.facilities ?? []).join(', '))
-    setImageUrlsInput((v.images ?? []).join('\n'))
+    setKeepUrls(v.images ?? [])
+    setNewImages([])
     setError('')
     setShowModal(true)
   }
@@ -83,7 +91,8 @@ export default function AdminVillasPage() {
     const payload: VillaFormPayload = {
       ...form,
       facilities: facilitiesInput.split(',').map(s => s.trim()).filter(Boolean),
-      imageUrls: imageUrlsInput.split('\n').map(s => s.trim()).filter(Boolean),
+      imageUrls: keepUrls,
+      imageFiles: newImages.map(i => i.file),
     }
     try {
       if (editVilla) {
@@ -254,8 +263,15 @@ export default function AdminVillasPage() {
                 <FormField label="Fasilitas (pisahkan koma)">
                   <input className="input-base" value={facilitiesInput} onChange={e => setFacilitiesInput(e.target.value)} placeholder="Kolam renang, WiFi, Dapur" />
                 </FormField>
-                <FormField label="URL Gambar (satu per baris)">
-                  <textarea className="input-base" rows={3} value={imageUrlsInput} onChange={e => setImageUrlsInput(e.target.value)} placeholder="https://..." />
+                {/* Image upload section */}
+                <FormField label="Foto Villa (maks. 10 gambar)">
+                  <ImageUploader
+                    images={newImages}
+                    onChange={setNewImages}
+                    existingUrls={keepUrls}
+                    onRemoveExisting={url => setKeepUrls(prev => prev.filter(u => u !== url))}
+                    maxImages={10}
+                  />
                 </FormField>
 
                 <div className="flex items-center gap-2">

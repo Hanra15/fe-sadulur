@@ -21,7 +21,10 @@ export interface VillaFormPayload {
   available?: boolean
   lat?: number
   lng?: number
+  /** Existing image URLs to keep (from server) */
   imageUrls?: string[]
+  /** New local File objects to upload */
+  imageFiles?: File[]
   owner_id?: string | number
 }
 
@@ -40,12 +43,16 @@ export const villaService = {
     const formData = new FormData()
     Object.entries(payload).forEach(([key, val]) => {
       if (val === undefined || val === null) return
+      if (key === 'imageFiles') return   // handled separately
       if (key === 'facilities' || key === 'imageUrls') {
         formData.append(key, JSON.stringify(val))
       } else {
         formData.append(key, String(val))
       }
     })
+    if (payload.imageFiles?.length) {
+      payload.imageFiles.forEach(file => formData.append('images', file))
+    }
     const { data } = await apiClient.post('/villas', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     })
@@ -56,12 +63,16 @@ export const villaService = {
     const formData = new FormData()
     Object.entries(payload).forEach(([key, val]) => {
       if (val === undefined || val === null) return
+      if (key === 'imageFiles') return   // handled separately
       if (key === 'facilities' || key === 'imageUrls') {
         formData.append(key, JSON.stringify(val))
       } else {
         formData.append(key, String(val))
       }
     })
+    if (payload.imageFiles?.length) {
+      payload.imageFiles.forEach(file => formData.append('images', file))
+    }
     const { data } = await apiClient.put(`/villas/${id}`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     })
