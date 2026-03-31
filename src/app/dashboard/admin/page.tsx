@@ -3,7 +3,7 @@
 import { useAuth } from '@/contexts/AuthContext'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Building2, CalendarCheck, CreditCard, Users, ShieldCheck, Clock, CheckCircle, XCircle } from 'lucide-react'
+import { Building2, CalendarCheck, CreditCard, Users, ShieldCheck, Clock, CheckCircle } from 'lucide-react'
 import { villaService } from '@/services/villaService'
 import { bookingService } from '@/services/bookingService'
 
