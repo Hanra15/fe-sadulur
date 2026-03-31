@@ -25,6 +25,8 @@ export interface VillaFormPayload {
   imageUrls?: string[]
   /** New local File objects to upload */
   imageFiles?: File[]
+  /** Server image URLs to delete (sent as removeImages to backend) */
+  removeImageUrls?: string[]
   owner_id?: string | number
 }
 
@@ -63,15 +65,24 @@ export const villaService = {
     const formData = new FormData()
     Object.entries(payload).forEach(([key, val]) => {
       if (val === undefined || val === null) return
-      if (key === 'imageFiles') return   // handled separately
-      if (key === 'facilities' || key === 'imageUrls') {
+      // These are handled separately below
+      if (key === 'imageFiles' || key === 'removeImageUrls') return
+      if (key === 'facilities') {
         formData.append(key, JSON.stringify(val))
+      } else if (key === 'imageUrls') {
+        // Not used on update — backend ignores it; we use removeImageUrls instead
+        return
       } else {
         formData.append(key, String(val))
       }
     })
+    // Append each new file
     if (payload.imageFiles?.length) {
       payload.imageFiles.forEach(file => formData.append('images', file))
+    }
+    // Tell backend which existing images to delete
+    if (payload.removeImageUrls?.length) {
+      payload.removeImageUrls.forEach(url => formData.append('removeImages', url))
     }
     const { data } = await apiClient.put(`/villas/${id}`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' },

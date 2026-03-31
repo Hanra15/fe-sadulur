@@ -31,6 +31,8 @@ export default function AdminVillasPage() {
   const [newImages, setNewImages] = useState<UploadedImage[]>([])
   // Existing server image URLs to keep
   const [keepUrls, setKeepUrls] = useState<string[]>([])
+  // Server image URLs the user removed — sent to backend as removeImages
+  const [removedUrls, setRemovedUrls] = useState<string[]>([])
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
 
@@ -63,6 +65,7 @@ export default function AdminVillasPage() {
     setFacilitiesInput('')
     setNewImages([])
     setKeepUrls([])
+    setRemovedUrls([])
     setError('')
     setShowModal(true)
   }
@@ -81,6 +84,7 @@ export default function AdminVillasPage() {
     setFacilitiesInput((v.facilities ?? []).join(', '))
     setKeepUrls(v.images ?? [])
     setNewImages([])
+    setRemovedUrls([])
     setError('')
     setShowModal(true)
   }
@@ -93,6 +97,7 @@ export default function AdminVillasPage() {
       facilities: facilitiesInput.split(',').map(s => s.trim()).filter(Boolean),
       imageUrls: keepUrls,
       imageFiles: newImages.map(i => i.file),
+      removeImageUrls: removedUrls,
     }
     try {
       if (editVilla) {
@@ -269,7 +274,14 @@ export default function AdminVillasPage() {
                     images={newImages}
                     onChange={setNewImages}
                     existingUrls={keepUrls}
-                    onRemoveExisting={url => setKeepUrls(prev => prev.filter(u => u !== url))}
+                    onRemoveExisting={url => {
+                      setKeepUrls(prev => prev.filter(u => u !== url))
+                      setRemovedUrls(prev => [...prev, url])
+                    }}
+                    onReorder={(newKeep, newNew) => {
+                      setKeepUrls(newKeep)
+                      setNewImages(newNew)
+                    }}
                     maxImages={10}
                   />
                 </FormField>
