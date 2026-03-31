@@ -83,10 +83,14 @@ export interface PaginatedResponse<T> {
 export interface Review {
   id: string | number
   villa_id: string | number
+  villa?: { id: string | number; name: string; location: string }
+  user_id?: string | number
+  reviewer?: { id: string | number; name: string; email: string; phone?: string }
   user?: User
   rating: number
   comment: string
   created_at?: string
+  createdAt?: string
 }
 
 export interface Payment {

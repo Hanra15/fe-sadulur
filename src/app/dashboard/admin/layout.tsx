@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import {
   LayoutDashboard, Users, Building2, CalendarCheck,
-  CreditCard, BarChart3, ShieldCheck,
+  CreditCard, BarChart3, ShieldCheck, Star,
 } from 'lucide-react'
 import DashboardShell, { DashboardNavItem } from '@/components/layout/DashboardShell'
 
@@ -16,6 +16,7 @@ const navItems: DashboardNavItem[] = [
   { href: '/dashboard/admin/payments', icon: CreditCard, label: 'Pembayaran' },
   { href: '/dashboard/admin/users', icon: Users, label: 'Pengguna' },
   { href: '/dashboard/admin/reports', icon: BarChart3, label: 'Laporan' },
+  { href: '/dashboard/admin/reviews', icon: Star, label: 'Ulasan' },
 ]
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
