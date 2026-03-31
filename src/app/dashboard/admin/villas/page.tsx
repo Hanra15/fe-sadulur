@@ -84,12 +84,15 @@ export default function AdminVillasPage() {
 
   function openEdit(v: Villa) {
     setEditVilla(v)
+    // Normalize: backend may return lat/lng as strings or "0.000000" — treat 0/NaN as undefined
+    const parsedLat = Number(v.lat) || undefined
+    const parsedLng = Number(v.lng) || undefined
     setForm({
       name: v.name, location: v.location, description: v.description,
       price: v.price, priceWeekend: v.priceWeekend, capacity: v.capacity,
       bedrooms: v.bedrooms ?? 1, bathrooms: v.bathrooms ?? 1,
       whatsapp: v.whatsapp ?? '', facilities: v.facilities ?? [],
-      available: v.available, lat: v.lat, lng: v.lng,
+      available: v.available, lat: parsedLat, lng: parsedLng,
       imageUrls: v.images ?? [],
       imageFiles: [],
     })
@@ -97,7 +100,7 @@ export default function AdminVillasPage() {
     setKeepUrls(v.images ?? [])
     setNewImages([])
     setRemovedUrls([])
-    setShowMap(!!(v.lat && v.lng))
+    setShowMap(!!(parsedLat && parsedLng))
     setError('')
     setShowModal(true)
   }

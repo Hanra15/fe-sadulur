@@ -57,8 +57,11 @@ function Recenter({ pos }: { pos: [number, number] | null }) {
 }
 
 export default function LocationPicker({ lat, lng, onChange }: LocationPickerProps) {
-  const hasInitial = lat !== undefined && lng !== undefined
-  const initialPos: [number, number] | null = hasInitial ? [lat!, lng!] : null
+  // Defensive: backend may send strings or 0.0 (null-island) — treat as no position
+  const safeLat = Number(lat) || undefined
+  const safeLng = Number(lng) || undefined
+  const hasInitial = !!safeLat && !!safeLng
+  const initialPos: [number, number] | null = hasInitial ? [safeLat!, safeLng!] : null
 
   const [markerPos, setMarkerPos] = useState<[number, number] | null>(initialPos)
   const [recenterTo, setRecenterTo] = useState<[number, number] | null>(initialPos)
@@ -73,8 +76,8 @@ export default function LocationPicker({ lat, lng, onChange }: LocationPickerPro
 
   // Sync if parent changes lat/lng externally (e.g. opening edit modal with existing values)
   useEffect(() => {
-    if (lat !== undefined && lng !== undefined) {
-      const pos: [number, number] = [lat, lng]
+    if (safeLat && safeLng) {
+      const pos: [number, number] = [safeLat, safeLng]
       setMarkerPos(pos)
       setRecenterTo(pos)
     }
