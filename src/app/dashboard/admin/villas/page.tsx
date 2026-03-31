@@ -185,7 +185,7 @@ export default function AdminVillasPage() {
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-lg overflow-hidden bg-slate-100 shrink-0 relative">
                         {v.images?.length ? (
-                          <Image src={getVillaThumbnail(v)} alt={v.name} fill className="object-cover" sizes="40px" />
+                          <Image src={getVillaThumbnail(v)} alt={v.name} fill className="object-cover" sizes="40px" unoptimized />
                         ) : (
                           <div className="flex items-center justify-center h-full"><ImageOff size={14} className="text-slate-300" /></div>
                         )}
