@@ -32,7 +32,12 @@ export interface VillaFormPayload {
 
 export const villaService = {
   getAll: async (filters?: VillaFilters & { page?: number; limit?: number }): Promise<PaginatedResponse<Villa>> => {
-    const { data } = await apiClient.get('/villas', { params: filters })
+    // Map frontend snake_case → backend camelCase param names
+    const { min_price, max_price, ...rest } = filters ?? {}
+    const params: Record<string, unknown> = { ...rest }
+    if (min_price !== undefined) params.minPrice = min_price
+    if (max_price !== undefined) params.maxPrice = max_price
+    const { data } = await apiClient.get('/villas', { params })
     return data
   },
 
