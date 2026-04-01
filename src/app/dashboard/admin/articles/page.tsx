@@ -1,7 +1,16 @@
 'use client'
 
 import { useEffect, useState, useCallback } from 'react'
+import dynamic from 'next/dynamic'
 import { articleService } from '@/services/articleService'
+
+const RichTextEditor = dynamic(
+  () => import('@/components/ui/RichTextEditor'),
+  {
+    ssr: false,
+    loading: () => <div className="h-64 rounded-xl bg-slate-100 animate-pulse" />,
+  },
+)
 import { Article } from '@/types'
 import { getImageUrl } from '@/utils'
 import Image from 'next/image'
@@ -321,7 +330,7 @@ export default function AdminArticlesPage() {
       {/* Add/Edit Modal */}
       {modalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-          <div className="bg-white rounded-2xl shadow-xl w-full max-w-2xl max-h-[90vh] flex flex-col">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-4xl max-h-[90vh] flex flex-col">
             {/* Modal header */}
             <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 shrink-0">
               <h2 className="font-semibold text-slate-800">
@@ -392,13 +401,10 @@ export default function AdminArticlesPage() {
               {/* Content */}
               <div>
                 <label className="text-xs font-medium text-slate-500 block mb-1">Konten *</label>
-                <textarea
+                <RichTextEditor
                   value={form.content}
-                  onChange={e => setForm(f => ({ ...f, content: e.target.value }))}
-                  required
-                  rows={10}
-                  placeholder="Tulis konten artikel di sini..."
-                  className="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-slate-400 transition resize-y"
+                  onChange={html => setForm(f => ({ ...f, content: html }))}
+                  minHeight={320}
                 />
               </div>
 

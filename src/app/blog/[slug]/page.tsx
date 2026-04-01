@@ -135,9 +135,10 @@ export default function ArticleDetailPage() {
               {article.excerpt}
             </p>
           )}
-          <div className="prose prose-slate max-w-none text-slate-700 text-sm sm:text-base leading-relaxed whitespace-pre-wrap">
-            {article.content}
-          </div>
+          <div
+            className="article-content"
+            dangerouslySetInnerHTML={{ __html: article.content ?? '' }}
+          />
         </div>
 
         <div className="mt-8">
