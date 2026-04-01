@@ -32,29 +32,29 @@ export default function DashboardShell({
     exact ? pathname === href : pathname.startsWith(href)
 
   return (
-    <div className="max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 py-6">
+    <div className="max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 py-6 pb-24 md:pb-6">
       {/* Mobile: horizontal scrollable pill nav */}
       <nav className="md:hidden flex gap-2 overflow-x-auto pb-3 mb-4 scrollbar-hide">
         {navItems.map(item => (
           <Link
             key={item.href}
             href={item.href}
-            className={`shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition ${
+            className={`shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-full text-xs font-semibold transition min-h-[40px] ${
               isActive(item.href, item.exact)
                 ? 'text-white shadow-sm'
-                : 'bg-white border border-slate-200 text-slate-600'
+                : 'bg-white border border-slate-200 text-slate-600 active:bg-slate-50'
             }`}
             style={isActive(item.href, item.exact) ? { background: headerBg } : {}}
           >
-            <item.icon size={12} />
+            <item.icon size={14} />
             {item.label}
           </Link>
         ))}
         <button
           onClick={onLogout}
-          className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-white border border-red-200 text-red-500"
+          className="shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-full text-xs font-semibold bg-white border border-red-200 text-red-500 min-h-[40px]"
         >
-          <LogOut size={12} /> Keluar
+          <LogOut size={14} /> Keluar
         </button>
       </nav>
 

@@ -14,6 +14,12 @@
 :root {
   --background: #f8fafc;
   --foreground: #1e293b;
+  /* Safe area insets (iOS notch / Android chin) */
+  --sai-top:    env(safe-area-inset-top, 0px);
+  --sai-bottom: env(safe-area-inset-bottom, 0px);
+  --sai-left:   env(safe-area-inset-left, 0px);
+  --sai-right:  env(safe-area-inset-right, 0px);
+  --mobile-nav-h: 64px;
 }
 
 body {
@@ -21,12 +27,49 @@ body {
   color: var(--foreground);
   font-family: 'Inter', Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
+  /* Prevent horizontal overflow on small screens */
+  overflow-x: hidden;
 }
 
 .container {
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 1rem;
+}
+
+/* =====================================================
+   MOBILE UTILITIES
+   ===================================================== */
+
+/* Hide scrollbar (cross-browser) */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+
+/* Touch target min size (WCAG / HIG) */
+.touch-min { min-height: 44px; min-width: 44px; }
+
+/* Bottom padding to clear fixed mobile nav */
+.pb-mobile-nav {
+  padding-bottom: calc(var(--mobile-nav-h) + var(--sai-bottom) + 0.5rem);
+}
+
+/* Safe-area aware padding */
+.pb-safe { padding-bottom: calc(var(--sai-bottom) + 0.5rem); }
+.pt-safe { padding-top: calc(var(--sai-top) + 0.5rem); }
+
+/* Fold / very small screens (< 360px - Samsung Fold closed, etc.) */
+@media (max-width: 359px) {
+  .fold-text-xs { font-size: 0.65rem !important; line-height: 1.2 !important; }
+  .fold-hide    { display: none !important; }
+  .fold-px-sm   { padding-left: 0.5rem !important; padding-right: 0.5rem !important; }
+}
+
+/* Tablet-specific helpers (768px – 1024px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .tablet-grid-2 { grid-template-columns: repeat(2, 1fr) !important; }
 }
 
 /* ============================================

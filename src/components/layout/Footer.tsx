@@ -5,8 +5,8 @@ import { MapPin, Phone, Mail } from 'lucide-react'
 export default function Footer() {
   return (
     <footer className="text-slate-200 mt-16" style={{ backgroundColor: '#2C4B1A' }}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 md:gap-10">
           {/* Brand */}
           <div>
             <div className="flex items-center gap-3 mb-3">
@@ -62,7 +62,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t mt-10 pt-6 text-center text-sm text-slate-500" style={{ borderColor: '#3A6928' }}>
+        <div className="border-t mt-8 md:mt-10 pt-5 md:pt-6 pb-mobile-nav md:pb-0 text-center text-sm text-slate-500" style={{ borderColor: '#3A6928' }}>
           © {new Date().getFullYear()} Villa Sadulur Group. All rights reserved.
         </div>
       </div>

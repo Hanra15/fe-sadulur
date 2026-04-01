@@ -219,80 +219,11 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* ── Mobile toggle ── */}
-          <button
-            className="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100 transition"
-            onClick={() => setMenuOpen(v => !v)}
-            aria-label="Toggle menu"
-          >
-            {menuOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
+          {/* Mobile toggle removed — handled by MobileBottomNav */}
         </div>
       </div>
 
-      {/* ── Mobile Menu ── */}
-      {menuOpen && (
-        <div className="md:hidden bg-white border-t border-slate-100 px-4 py-4 space-y-1 shadow-lg">
-          {/* Primary */}
-          <Link href="/" className="flex items-center gap-2.5 py-2.5 text-sm font-medium text-slate-700" onClick={close}>
-            <Home size={15} style={{ color: '#5C8A36' }} /> Beranda
-          </Link>
-          <Link
-            href="/villas"
-            className="flex items-center gap-2.5 py-2.5 text-sm font-semibold text-white px-3 rounded-xl"
-            style={{ background: '#5C8A36' }}
-            onClick={close}
-          >
-            <Search size={15} /> Cari Villa
-          </Link>
-
-          <div className="pt-2 pb-1">
-            <div className="h-px bg-slate-100" />
-          </div>
-
-          {/* Accordion groups */}
-          <MobileSection label="Jelajahi" items={EXPLORE_ITEMS} onClose={close} />
-          <MobileSection label="Bantuan" items={HELP_ITEMS} onClose={close} />
-
-          <div className="pt-2 pb-1">
-            <div className="h-px bg-slate-100" />
-          </div>
-
-          {/* Auth */}
-          {isLoggedIn ? (
-            <>
-              <Link href={dashboardHref} className="flex items-center gap-2.5 py-2.5 text-sm font-medium text-slate-700" onClick={close}>
-                <LayoutDashboard size={15} style={{ color: '#5C8A36' }} /> Dashboard
-              </Link>
-              <button
-                onClick={() => { logout(); close() }}
-                className="flex items-center gap-2.5 py-2.5 text-sm font-medium text-red-500 w-full"
-              >
-                <LogOut size={15} /> Keluar
-              </button>
-            </>
-          ) : (
-            <div className="flex gap-2 pt-1">
-              <Link
-                href="/login"
-                className="flex-1 text-center py-2.5 text-sm font-semibold rounded-xl border"
-                style={{ borderColor: '#5C8A36', color: '#5C8A36' }}
-                onClick={close}
-              >
-                Masuk
-              </Link>
-              <Link
-                href="/register"
-                className="flex-1 text-center py-2.5 text-sm font-semibold rounded-xl text-white"
-                style={{ background: '#5C8A36' }}
-                onClick={close}
-              >
-                Daftar
-              </Link>
-            </div>
-          )}
-        </div>
-      )}
+      {/* Mobile overlay menu removed — navigation handled by MobileBottomNav */}
     </nav>
   )
 }
