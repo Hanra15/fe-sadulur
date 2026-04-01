@@ -6,6 +6,7 @@ import { useEffect } from 'react'
 import {
   LayoutDashboard, Users, Building2, CalendarCheck,
   CreditCard, BarChart3, ShieldCheck, Star, MessageSquareQuote, FileText,
+  HelpCircle, TicketCheck, MessageSquare, Bot,
 } from 'lucide-react'
 import DashboardShell, { DashboardNavItem } from '@/components/layout/DashboardShell'
 
@@ -19,6 +20,10 @@ const navItems: DashboardNavItem[] = [
   { href: '/dashboard/admin/reviews', icon: Star, label: 'Ulasan' },
   { href: '/dashboard/admin/testimonials', icon: MessageSquareQuote, label: 'Testimoni' },
   { href: '/dashboard/admin/articles', icon: FileText, label: 'Artikel' },
+  { href: '/dashboard/admin/faqs', icon: HelpCircle, label: 'FAQ' },
+  { href: '/dashboard/admin/support', icon: TicketCheck, label: 'Support' },
+  { href: '/dashboard/admin/livechat', icon: MessageSquare, label: 'LiveChat' },
+  { href: '/dashboard/admin/livechat/knowledge', icon: Bot, label: 'Bot KB' },
 ]
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {

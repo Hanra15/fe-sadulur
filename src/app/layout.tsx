@@ -4,6 +4,7 @@ import './globals.css'
 import { Providers } from './providers'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
+import LiveChatWidgetWrapper from '@/components/livechat/LiveChatWidgetWrapper'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Navbar />
           <main className="flex-1">{children}</main>
           <Footer />
+          <LiveChatWidgetWrapper />
         </Providers>
       </body>
     </html>

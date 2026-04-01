@@ -155,6 +155,78 @@ export interface Article {
   createdAt?: string
 }
 
+export interface Faq {
+  id: number
+  question: string
+  answer: string
+  category: string
+  order_index: number
+  is_active: boolean
+  createdAt?: string
+}
+
+export interface SupportMessage {
+  id: number
+  ticket_id: number
+  sender_id?: number
+  sender_name: string
+  sender_role: 'user' | 'admin'
+  message: string
+  is_internal: boolean
+  createdAt: string
+}
+
+export interface SupportTicket {
+  id?: number
+  ticket_code: string
+  user_id?: number
+  name: string
+  email: string
+  subject: string
+  category: 'booking' | 'payment' | 'villa' | 'other'
+  priority: 'low' | 'medium' | 'high'
+  status: 'open' | 'in_progress' | 'resolved' | 'closed'
+  assigned_to?: number
+  resolved_at?: string
+  requester?: { id: number; name: string; email: string }
+  handler?: { id: number; name: string }
+  messages?: SupportMessage[]
+  createdAt?: string
+}
+
+export interface LiveChatMessage {
+  id: number
+  session_id: number
+  sender_type: 'visitor' | 'bot' | 'admin'
+  sender_id?: number
+  message: string
+  intent?: string
+  createdAt: string
+}
+
+export interface LiveChatSession {
+  id: number
+  session_token: string
+  user_id?: number
+  visitor_name?: string
+  visitor_email?: string
+  status: 'bot' | 'waiting' | 'active' | 'closed'
+  admin_id?: number
+  assignedAdmin?: { id: number; name: string }
+  ended_at?: string
+  messages?: LiveChatMessage[]
+  createdAt?: string
+}
+
+export interface BotKnowledge {
+  id: number
+  intent: string
+  keywords: string
+  response: string
+  order_index: number
+  is_active: boolean
+}
+
 export interface ApiResponse<T> {
   status: string
   data: T

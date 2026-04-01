@@ -3,7 +3,7 @@
 import { useAuth } from '@/contexts/AuthContext'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
-import { Search, CalendarCheck, MessageCircle, User, UserCircle } from 'lucide-react'
+import { Search, CalendarCheck, MessageCircle, User, UserCircle, TicketCheck } from 'lucide-react'
 import DashboardShell, { DashboardNavItem } from '@/components/layout/DashboardShell'
 
 const navItems: DashboardNavItem[] = [
@@ -11,6 +11,7 @@ const navItems: DashboardNavItem[] = [
   { href: '/villas', icon: Search, label: 'Cari Villa' },
   { href: '/dashboard/guest/bookings', icon: CalendarCheck, label: 'Booking Saya' },
   { href: '/dashboard/guest/messages', icon: MessageCircle, label: 'Pesan' },
+  { href: '/dashboard/guest/support', icon: TicketCheck, label: 'Dukungan' },
   { href: '/dashboard/guest/profile', icon: User, label: 'Profil' },
 ]
 

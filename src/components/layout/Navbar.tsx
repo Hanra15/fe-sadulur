@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useAuth } from '@/contexts/AuthContext'
 import { useState } from 'react'
-import { Menu, X, Home, Search, User, LogOut, LayoutDashboard, Info, Phone, BookOpen } from 'lucide-react'
+import { Menu, X, Home, Search, User, LogOut, LayoutDashboard, Info, Phone, BookOpen, HelpCircle, LifeBuoy } from 'lucide-react'
 
 export default function Navbar() {
   const { user, isLoggedIn, logout } = useAuth()
@@ -47,6 +47,12 @@ export default function Navbar() {
             </Link>
             <Link href="/blog" className="text-slate-600 flex items-center gap-1 transition hover:text-brand-primary">
               <BookOpen size={16} /> Blog
+            </Link>
+            <Link href="/faq" className="text-slate-600 flex items-center gap-1 transition hover:text-brand-primary">
+              <HelpCircle size={16} /> FAQ
+            </Link>
+            <Link href="/support" className="text-slate-600 flex items-center gap-1 transition hover:text-brand-primary">
+              <LifeBuoy size={16} /> Bantuan
             </Link>
             <Link href="/about" className="text-slate-600 flex items-center gap-1 transition hover:text-brand-primary">
               <Info size={16} /> Tentang
@@ -99,6 +105,8 @@ export default function Navbar() {
           <Link href="/" className="text-slate-700 transition" style={{ color: '#2C4B1A' }} onClick={() => setMenuOpen(false)}>Beranda</Link>
           <Link href="/villas" className="text-slate-700 transition" onClick={() => setMenuOpen(false)}>Cari Villa</Link>
           <Link href="/blog" className="text-slate-700 transition" onClick={() => setMenuOpen(false)}>Blog</Link>
+          <Link href="/faq" className="text-slate-700 transition" onClick={() => setMenuOpen(false)}>FAQ</Link>
+          <Link href="/support" className="text-slate-700 transition" onClick={() => setMenuOpen(false)}>Bantuan</Link>
           <Link href="/about" className="text-slate-700 transition" onClick={() => setMenuOpen(false)}>Tentang Kami</Link>
           <Link href="/contact" className="text-slate-700 transition" onClick={() => setMenuOpen(false)}>Kontak</Link>
           {isLoggedIn ? (
