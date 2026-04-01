@@ -146,7 +146,7 @@ export default function LiveChatWidget() {
       {/* Chat window */}
       {open && (
         <div
-          className="fixed bottom-20 right-4 z-50 w-80 shadow-2xl rounded-2xl flex flex-col overflow-hidden"
+          className="fixed bottom-36 md:bottom-24 right-4 z-50 w-80 shadow-2xl rounded-2xl flex flex-col overflow-hidden"
           style={{ height: '460px', background: '#fff', border: '1px solid #e2e8f0' }}
         >
           {/* Header */}
@@ -274,7 +274,7 @@ export default function LiveChatWidget() {
       {/* Toggle button */}
       <button
         onClick={() => setOpen((v) => !v)}
-        className="fixed bottom-4 right-4 z-50 w-13 h-13 rounded-full text-white shadow-xl flex items-center justify-center transition-transform hover:scale-105 active:scale-95"
+        className="fixed bottom-20 md:bottom-6 right-4 z-50 w-13 h-13 rounded-full text-white shadow-xl flex items-center justify-center transition-transform hover:scale-105 active:scale-95"
         style={{ background: '#2C4B1A', width: '52px', height: '52px' }}
         aria-label="Live chat"
       >

@@ -148,14 +148,14 @@ export default function Navbar() {
             <Image
               src="/images/logo-vilasad.png"
               alt="Villa Sadulur"
-              width={38}
-              height={38}
+              width={36}
+              height={36}
               className="rounded-full object-contain"
               priority
             />
-            <div className="leading-tight hidden sm:block">
-              <span className="text-base font-extrabold" style={{ color: '#2C4B1A' }}>VILLA </span>
-              <span className="text-base font-extrabold" style={{ color: '#5C8A36' }}>SADULUR</span>
+            <div className="leading-tight">
+              <span className="text-sm font-extrabold" style={{ color: '#2C4B1A' }}>VILLA </span>
+              <span className="text-sm font-extrabold" style={{ color: '#5C8A36' }}>SADULUR</span>
             </div>
           </Link>
 
