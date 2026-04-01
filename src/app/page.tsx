@@ -1,6 +1,7 @@
 import SearchBar from '@/components/villa/SearchBar'
 import VillaListSection from '@/components/villa/VillaListSection'
 import TestimonialsSection from '@/components/home/TestimonialsSection'
+import ArticlesSection from '@/components/home/ArticlesSection'
 import { Shield, MapPin, Star, Clock, ArrowRight, CheckCircle, Users, Home } from 'lucide-react'
 import Link from 'next/link'
 
@@ -235,6 +236,11 @@ export default function HomePage() {
           TESTIMONI
       ======================== */}
       <TestimonialsSection />
+
+      {/* ========================
+          ARTIKEL
+      ======================== */}
+      <ArticlesSection />
 
       {/* ========================
           CTA
