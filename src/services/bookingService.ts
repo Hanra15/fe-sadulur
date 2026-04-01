@@ -3,9 +3,20 @@ import { ApiResponse, Booking } from '@/types'
 
 export type BookingStatus = 'pending' | 'confirmed' | 'cancelled' | 'paid'
 
+// Payload untuk POST /api/bookings — backend resolve villa info dari slug
+export interface CreateBookingPayload {
+  villa_slug: string
+  customerName: string
+  customerPhone: string
+  customerEmail?: string
+  checkInDate: string
+  checkOutDate: string
+  numberOfGuests?: number
+}
+
 export const bookingService = {
-  // POST /api/bookings (JWT optional - visitor)
-  create: async (payload: Partial<Booking>): Promise<ApiResponse<Booking>> => {
+  // POST /api/bookings — villa_slug wajib, backend resolve villa info
+  create: async (payload: CreateBookingPayload): Promise<ApiResponse<Booking>> => {
     const { data } = await apiClient.post('/bookings', payload)
     return data
   },

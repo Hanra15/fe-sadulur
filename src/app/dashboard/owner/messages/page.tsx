@@ -108,11 +108,10 @@ export default function OwnerMessagesPage() {
     setSending(true)
     try {
       await chatService.sendMessage({
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         receiver_id: active.otherId,
         message: replyText.trim(),
         ...(active.villaId ? { villa_id: active.villaId } : {}),
-      } as never)
+      })
       setReplyText('')
       await loadChats()
     } catch {} finally { setSending(false) }

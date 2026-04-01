@@ -51,13 +51,10 @@ export default function BookingForm({ villa, onCancel }: Props) {
     setLoading(true)
     try {
       const res = await bookingService.create({
-        villa_id: villa.id,
+        villa_slug: villa.slug ?? String(villa.id),
         customerName: form.guest_name,
         customerPhone: form.guest_phone,
         customerEmail: form.guest_email || undefined,
-        villaName: villa.name,
-        villaLocation: villa.location,
-        villaPrice: villa.price,
         checkInDate: form.check_in,
         checkOutDate: form.check_out,
         numberOfGuests: form.guests,

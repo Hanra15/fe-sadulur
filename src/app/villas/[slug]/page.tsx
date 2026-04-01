@@ -5,18 +5,26 @@ import { useParams, useRouter } from 'next/navigation'
 import { villaService } from '@/services/villaService'
 import { reviewService } from '@/services/reviewService'
 import { formatCurrency, getImageUrl } from '@/utils'
-import { MapPin, Star, Users, BedDouble, Bath, Wifi, Car, Loader2, AlertCircle, ArrowLeft, Expand } from 'lucide-react'
+import { MapPin, Star, Users, BedDouble, Bath, Wifi, Car, Loader2, AlertCircle, ArrowLeft, Expand, MessageCircle } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import BookingForm from '@/components/booking/BookingForm'
 import ImageLightbox from '@/components/villa/ImageLightbox'
+import { useAuth } from '@/contexts/AuthContext'
+import { chatService } from '@/services/chatService'
 
 export default function VillaDetailPage() {
   const { slug } = useParams<{ slug: string }>()
   const router = useRouter()
   const [showBooking, setShowBooking] = useState(false)
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+  const [showChat, setShowChat] = useState(false)
+  const [chatMsg, setChatMsg] = useState('')
+  const [chatSending, setChatSending] = useState(false)
+  const [chatSent, setChatSent] = useState(false)
+  const [chatError, setChatError] = useState('')
+  const { user } = useAuth()
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['villa', slug],
@@ -234,6 +242,59 @@ export default function VillaDetailPage() {
                   >
                     <span>💬</span> Hubungi via WhatsApp
                   </a>
+                )}
+                {user && villa.owner_id && !showChat && (
+                  <button
+                    onClick={() => setShowChat(true)}
+                    className="w-full flex items-center justify-center gap-2 border font-medium py-3 rounded-xl transition text-sm" style={{ borderColor: "#9cc475", color: "#3A6928" }}
+                  >
+                    <MessageCircle size={15} /> Tanya Pengelola
+                  </button>
+                )}
+                {user && villa.owner_id && showChat && !chatSent && (
+                  <div className="border rounded-xl p-3 space-y-2" style={{ borderColor: "#9cc475" }}>
+                    <p className="text-xs font-semibold" style={{ color: "#3A6928" }}>Kirim pesan ke pengelola</p>
+                    <textarea
+                      rows={3}
+                      className="w-full text-sm border border-slate-200 rounded-lg p-2 resize-none focus:outline-none focus:ring-1" style={{ '--tw-ring-color': '#5C8A36' } as React.CSSProperties}
+                      placeholder="Tulis pertanyaan Anda..."
+                      value={chatMsg}
+                      onChange={e => { setChatMsg(e.target.value); setChatError('') }}
+                    />
+                    {chatError && <p className="text-xs text-red-500">{chatError}</p>}
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => { setShowChat(false); setChatMsg(''); setChatError('') }}
+                        className="flex-1 border border-slate-200 text-slate-500 text-sm py-2 rounded-lg"
+                      >Batal</button>
+                      <button
+                        disabled={chatSending || !chatMsg.trim()}
+                        onClick={async () => {
+                          if (!chatMsg.trim()) return
+                          setChatSending(true); setChatError('')
+                          try {
+                            await chatService.sendMessage({
+                              receiver_id: villa.owner_id!,
+                              message: chatMsg.trim(),
+                              villa_id: villa.id,
+                            })
+                            setChatSent(true)
+                          } catch {
+                            setChatError('Gagal mengirim pesan. Coba lagi.')
+                          } finally {
+                            setChatSending(false)
+                          }
+                        }}
+                        className="flex-1 text-white text-sm py-2 rounded-lg disabled:opacity-50" style={{ backgroundColor: '#5C8A36' }}
+                      >{chatSending ? 'Mengirim...' : 'Kirim'}</button>
+                    </div>
+                  </div>
+                )}
+                {user && villa.owner_id && chatSent && (
+                  <div className="border rounded-xl p-3 text-center space-y-2" style={{ borderColor: '#A8D87A', backgroundColor: '#f0fae8' }}>
+                    <p className="text-sm font-medium" style={{ color: '#3A6928' }}>✓ Pesan terkirim!</p>
+                    <Link href="/dashboard/guest/messages" className="text-xs underline" style={{ color: '#5C8A36' }}>Lihat percakapan →</Link>
+                  </div>
                 )}
               </div>
             ) : (

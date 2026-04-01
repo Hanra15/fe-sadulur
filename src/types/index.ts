@@ -49,6 +49,7 @@ export interface Villa {
 export interface Booking {
   id: string | number
   bookingCode?: string
+  villa_slug?: string
   villa_id?: string | number
   villa?: Villa
   user_id?: string | number

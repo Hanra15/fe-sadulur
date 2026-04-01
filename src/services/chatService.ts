@@ -14,11 +14,12 @@ export const chatService = {
     return data
   },
 
-  // POST /api/chats - kirim pesan (bisa membuat chat baru atau reply ke chat existing)
+  // POST /api/chats — receiver_id + message wajib, villa_id + booking_id opsional
   sendMessage: async (payload: {
-    chat_id?: string | number
-    villa_id?: string | number
+    receiver_id: string | number
     message: string
+    villa_id?: string | number
+    booking_id?: string | number
   }): Promise<ApiResponse<ChatMessage>> => {
     const { data } = await apiClient.post('/chats', payload)
     return data
