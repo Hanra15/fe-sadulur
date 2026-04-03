@@ -1,11 +1,12 @@
 import axios from 'axios'
 
 const apiClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://villa-sadulur.my.id/api',
+  baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://api.villa-sadulur.com/api',
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 10000,
+  // Lebih tinggi untuk shared hosting yang kadang lambat cold-start
+  timeout: 20000,
 })
 
 // Request interceptor — lampirkan token jika ada

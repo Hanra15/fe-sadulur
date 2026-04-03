@@ -1,6 +1,6 @@
 import { Villa } from '@/types'
 
-const API_BASE = (process.env.NEXT_PUBLIC_API_URL || 'https://villa-sadulur.my.id/api')
+const API_BASE = (process.env.NEXT_PUBLIC_API_URL || 'https://api.villa-sadulur.com/api')
   .replace(/\/api$/, '')
 
 export function getImageUrl(path: string): string {

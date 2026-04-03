@@ -5,8 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
+    "start": "next start -p ${PORT:-3000}",
+    "lint": "eslint",
+    "start:standalone": "node .next/standalone/server.js",
+    "build:prod": "NODE_ENV=production next build"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.95.2",
@@ -39,5 +41,9 @@
     "prettier": "^3.8.1",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=18.17.0",
+    "npm": ">=9.0.0"
   }
 }
